@@ -5,8 +5,12 @@
       :key="index"
       class="p-2 my-4 rounded bg-blue-200 w-full shadow-sm"
     >
+      <p class="ml-11 mb-2 font-bold">
+        Index: {{ index }}, Tags: {{ item.assunto.join(' - ') }}, Memory Points:
+        {{ item.memory }}
+      </p>
       <details>
-        <summary class="mb-2">{{ item.question }}</summary>
+        <summary class="mb-2 text-2xl">{{ item.question }}</summary>
 
         <ul class="ml-11 mb-2">
           <li v-for="(ritem, rindex) in item.answer" :key="rindex">
@@ -16,7 +20,7 @@
         <img
           v-if="item.image"
           class="ml-11 mb-2"
-          :src="`/_nuxt/assets/${item.image}`"
+          :src="require(`~/assets/${item.image}`)"
           :alt="item.image"
         />
         <button
