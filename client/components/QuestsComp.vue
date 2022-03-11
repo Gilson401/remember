@@ -84,6 +84,7 @@
 <script>
 import quests from '../helpers/quests/quests'
 import questsgithub from '../helpers/quests/quests-github'
+import store from '../helpers/quests/store'
 
 export default {
   data() {
@@ -92,7 +93,8 @@ export default {
       currentList: [],
       listas: {
         geral: quests,
-        github: questsgithub
+        github: questsgithub,
+        store
       }
     }
   },

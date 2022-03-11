@@ -12,7 +12,7 @@ module.exports = [
         ],
         link: ['https://www.conventionalcommits.org/pt-br/v1.0.0/',
             'https://github.com/angular/angular/blob/22b96b9/CONTRIBUTING.md#-commit-message-guidelines'],
-        image: '',
+        image: 'commit-messages.png',
     }
 ]
 
