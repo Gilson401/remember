@@ -76,11 +76,11 @@ module.exports = [
     {
         assunto: ['componentes'],
         memory: 0,
-        question: 'Cite X pontos sobre nomenclatura de componentes',
+        question: 'Cite 7 pontos sobre nomenclatura de componentes',
         link: ['https://br.vuejs.org/v2/style-guide/index.html'],
         answer: [
             'Nomes de componentes devem ser MultiPalavras. Ex.: CardProfile.vue',
-            'Nome de files de componentes single-file devem ser pascalCase PascalCaseComponent.vue ',
+            'Nome de files de componentes single-file devem ser PascalCaseComponent.vue ',
             'Se um componente é base para outros, o nome deve indicar, ex: BaseButton.vue.',
             'Nomeie TheUniqueComponente.vue somente utilizado uma vez a cada página.',
             'Nomes indica acoplamento, ie. componente filho só faz sentido dentro de um pai específico: FatherSonComponent.vue',
@@ -91,7 +91,7 @@ module.exports = [
     {
         assunto: ['componentes', 'html', 'template'],
         memory: 0,
-        question: 'Quais são as 3 orientações para invocação de componente na escrita da parte html no vue',
+        question: 'Quais são as 3 orientações para invocação de componente na escrita da parte html no vuecli e cdn?',
         link: ['https://br.vuejs.org/v2/style-guide/index.html'],
         answer: [
             'Em files.vue (vue-cli) são válidos: <MyComponent/> <my-component></my-component>',
@@ -141,7 +141,7 @@ module.exports = [
     {
         assunto: ['componentes', 'vue', 'slots'],
         memory: 0,
-        question: 'Cite X recomendações para slots em vue',
+        question: 'Cite 4 recomendações para slots em vue',
         answer: [
             'Assinatura de um slot default não precisa de name: <slot />',
             'Assinatura de um slot não default precisa de name: <slot name="slotName"/>',
