@@ -13,6 +13,18 @@ module.exports = [
         link: ['https://www.conventionalcommits.org/pt-br/v1.0.0/',
             'https://github.com/angular/angular/blob/22b96b9/CONTRIBUTING.md#-commit-message-guidelines'],
         image: 'commit-messages.png',
+    },
+    {
+        assunto: ['github', 'boas-praticas', 'ify-devs'],
+        memory: 0,
+        question: 'Cite X recomendações dos devs para criação de branchs.',
+        answer: ['Crie branchs a partir da master atualizada',
+            'Crie a partir da interface Github',
+            'Nomeie com o número da issue, quando houver. Criando pela issue associa automáticamente.',
+            'Certifique-se que vc está na pasta do projeto correto'
+        ],
+        link: [],
+        image: 'criar-branch.png',
     }
 ]
 

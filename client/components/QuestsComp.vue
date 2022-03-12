@@ -28,8 +28,15 @@
       class="p-2 my-4 rounded bg-blue-200 w-full shadow-sm"
     >
       <p class="ml-11 mb-2 font-bold">
-        Index: {{ index }}, Tags: {{ item.assunto.join(' - ') }}, Memory Points:
-        {{ item.memory }}
+        Index: {{ index }}, Tags:
+        <span
+          v-for="(tag, tagIndex) in item.assunto"
+          :key="tagIndex"
+          class="mr-2 text-base inline-block py-1 px-2.5 leading-none text-center whitespace-nowrap align-baseline bg-gray-200 text-gray-700 rounded"
+        >
+          {{ tag }}</span
+        >
+        , Memory Points: {{ item.memory }}
       </p>
       <details>
         <summary class="mb-2 text-2xl">{{ item.question }}</summary>
@@ -82,19 +89,16 @@
 </template>
 
 <script>
-import quests from '../helpers/quests/quests'
-import questsgithub from '../helpers/quests/quests-github'
-import store from '../helpers/quests/store'
+import quests from '../helpers/quests/index'
 
 export default {
   data() {
     return {
-      currentArea: 'geral',
+      currentArea: 'store',
       currentList: [],
+      filterTags: [],
       listas: {
-        geral: quests,
-        github: questsgithub,
-        store
+        ...quests
       }
     }
   },
@@ -106,8 +110,17 @@ export default {
       return (param) => this.listas[param]
     }
   },
+  watch: {
+    currentArea() {
+      this.setCurrentList()
+    }
+  },
+  mounted() {
+    this.setCurrentList()
+  },
   methods: {
     setCurrentList() {
+      if (!this.currentArea) return
       this.currentList = this.listas[this.currentArea]
     }
   }

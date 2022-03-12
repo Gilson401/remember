@@ -1,0 +1,27 @@
+{
+  "name": "memory",
+  "version": "1.0.0",
+  "description": "memory api remember",
+  "main": "server.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "server": "nodemon server.js"
+  },
+  "keywords": [
+    "memory",
+    "api",
+    "remember"
+  ],
+  "author": "gilson",
+  "license": "ISC",
+  "dependencies": {
+    "express": "^4.17.3",
+    "express-validator": "^6.4.0",
+    "moment": "^2.29.1",
+    "mongoose": "^5.11.15",
+    "cors": "^2.8.5"
+  },
+  "devDependencies": {
+    "nodemon": "^2.0.7"
+  }
+}

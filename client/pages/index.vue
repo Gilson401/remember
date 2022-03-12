@@ -1,6 +1,6 @@
 <template>
   <main>
-    <h1 class="w-full mx-auto text-center my-5 text-2xl">Questionário</h1>
+    <h1 class="text-6xl leading-tight mb-4 pb-4 border-b">Questionário</h1>
     <QuestsComp />
   </main>
 </template>
