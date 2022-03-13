@@ -57,9 +57,11 @@ module.exports = [
     {
         assunto: ['testes'],
         memory: 0,
-        question: 'Cite x observações correlatas a testes e módulos',
+        question: 'Cite 3 observações correlatas a testes e módulos',
         answer: [
             'Pode refatorar o código do colega sim caso o teste indique esta necessidade',
+            'Para teste de componente sêni,or orienta a testar literalmente apenas props, slots, emits e os compoetamentos disparados por estes.',
+            'Para teste de store o senior indica testar apenas inputs e outputs de cada mutation, action e getter'
         ],
     },
     {

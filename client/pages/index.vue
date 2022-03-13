@@ -1,15 +1,22 @@
 <template>
-  <main>
-    <h1 class="text-6xl leading-tight mb-4 pb-4 border-b">Questionário</h1>
-    <QuestsComp />
+  <main class="w-full pr-2 h-screen flex flex-col bg-white">
+    <QuestsComp
+      v-if="$store.state.display.mode === 'quest'"
+      class="pt-24 z-10"
+    />
+
+    <FormCreate
+      v-if="$store.state.display.mode === 'form'"
+      class="pt-24 z-10"
+    />
   </main>
 </template>
 
 <script>
 export default {
   name: 'IndexPage',
+  layout: 'default',
 
-  //   TODO
   data() {
     return {
       allMemoryItems: [],

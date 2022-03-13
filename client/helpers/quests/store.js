@@ -2,7 +2,7 @@ module.exports = [
     {
         assunto: ['store', 'vuex', 'boas-praticas'],
         memory: 0,
-        question: 'Cite X recomendações para escrita e uso de vuex-store',
+        question: 'Cite 4 recomendações para escrita e uso de vuex-store',
         answer: [
             'Todos os métodos da store são apenas para lidar com seus próprios states',
             'Store de tipo CRUD não é o padrão para todas as stores.',
@@ -14,20 +14,9 @@ module.exports = [
         image: '',
     },
     {
-        assunto: ['store', 'vuex'],
-        memory: 0,
-        question: 'Qual a diferença ente as delcarações de State export const state = () => {} e export function state() {}?',
-        answer: [
-            '',
-            '',
-        ],
-        link: [],
-        image: '',
-    },
-    {
         assunto: ['store', 'vuex', 'getters'],
         memory: 0,
-        question: 'Cite X recomendações para criação de gettes',
+        question: 'Cite 2 recomendações para criação de getters',
         answer: [
             'Inicie o nome com get.',
             'Se o retorno não for um state trabalhado não precisa criar getter.',

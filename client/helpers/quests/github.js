@@ -17,7 +17,7 @@ module.exports = [
     {
         assunto: ['github', 'boas-praticas', 'ify-devs'],
         memory: 0,
-        question: 'Cite X recomendações dos devs para criação de branchs.',
+        question: 'Cite 3 recomendações dos devs para criação de branchs.',
         answer: ['Crie branchs a partir da master atualizada',
             'Crie a partir da interface Github',
             'Nomeie com o número da issue, quando houver. Criando pela issue associa automáticamente.',
