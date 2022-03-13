@@ -39,6 +39,26 @@ router.post('/', [
     }
 })
 
+router.patch('/:questId', [
+    check('memory').not().isEmpty(),
+], async (request, res, next) => {
+    try {
+        const id = request.params.questId
+
+        let bodyRequest = request.body
+
+        const update = { $set: bodyRequest }
+        const updatedQuestion = await QuestsModel.findByIdAndUpdate(id, update, { new: true })
+        if (updatedQuestion) {
+            res.send(updatedQuestion)
+        } else {
+            res.status(404).send({ error: MSGS.USER404 })
+        }
+    } catch (err) {
+        res.status(500).send({ "error": err.message })
+    }
+})
+
 router.delete('/:itemID', async (req, res, next) => {
     try {
         const id = req.params.itemID

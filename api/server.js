@@ -19,6 +19,7 @@ app.use(bodyParser.json());
 
 
 
+app.use('/management', require('./routes/management'))
 app.use('/remember', require('./routes/remember'))
 
 
