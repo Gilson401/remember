@@ -37,11 +37,11 @@
       placeholder="Respostas"
     ></textarea>
     <button
-      class="ml-11 mb-2 bg-gray-500 text-white active:bg-gray-600 font-bold uppercase text-xs px-4 py-2 rounded shadow hover:shadow-md outline-none focus:outline-none mr-1 mb-1 ease-linear transition-all duration-150"
+      class="ml-auto mb-2 bg-gray-500 text-white hover:bg-green-600 font-bold uppercase text-xs px-4 py-2 rounded w-28 shadow hover:shadow-md outline-none focus:outline-none mr-1 mb-1 ease-linear transition-all duration-150"
       type="button"
       @click="submitQuestion()"
     >
-      Errou
+      Cadastrar
     </button>
   </form>
 </template>

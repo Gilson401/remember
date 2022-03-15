@@ -1,5 +1,5 @@
 <template>
-  <main class="w-full pr-2 h-screen flex flex-col bg-white">
+  <main class="w-full pr-2 h-screen flex flex-col bg-white relative">
     <QuestsComp
       v-if="$store.state.display.mode === 'quest'"
       class="pt-24 z-10"

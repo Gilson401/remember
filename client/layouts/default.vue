@@ -1,5 +1,5 @@
 <template>
-  <div class="flex items-start h-screen pl-64">
+  <div class="flex items-start h-screen pl-64 relative">
     <aside class="">
       <!-- Sidebar -->
       <nav
@@ -43,7 +43,7 @@ export default {
 }
 </script>
 
-<style lang="postcss">
+<style lang="postcss" scoped>
 html,
 body,
 #__nuxt,
@@ -60,7 +60,6 @@ body,
   padding: 58px 20px 0; /* Height of navbar */
   box-shadow: 0 2px 5px 0 rgb(0 0 0 / 5%), 0 2px 10px 0 rgb(0 0 0 / 5%);
   width: 240px;
-  z-index: 600;
 }
 
 @media (max-width: 991.98px) {
@@ -74,11 +73,11 @@ body,
 }
 
 .sidebar-sticky {
-  position: relative;
+  @apply relative pt-2 overflow-hidden;
+
   top: 0;
   height: calc(100vh - 48px);
-  padding-top: 0.5rem;
-  overflow-x: hidden;
+
   overflow-y: auto; /* Scrollable contents if viewport is shorter than content. */
 }
 </style>
