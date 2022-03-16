@@ -15,8 +15,8 @@
           multiple
         >
           <option value="all">TODOS</option>
-          <option v-for="area in disponibleTags" :key="area" :value="area">
-            {{ area.toUpperCase() }}
+          <option v-for="area in rankMemoryByTag" :key="area" :value="area[0]">
+            {{ area[0].toUpperCase() }} / {{ area[1] }}
           </option>
         </select>
 
@@ -88,10 +88,46 @@ export default {
       })
 
       return [...new Set(tags)].sort()
+    },
+    rankMemoryByTag() {
+      const rankItem = {}
+
+      this.disponibleTags.forEach((item) => {
+        const questionsWithTag = this.apiQuests.filter((itemQuest) =>
+          itemQuest.assunto.includes(item)
+        )
+
+        rankItem[item] = questionsWithTag.reduce(
+          (acc, quest) => acc + quest.memory,
+          0
+        )
+      })
+      return Object.entries(rankItem)
     }
   },
-
+  mounted() {
+    this.setRankMemoryByTag()
+  },
   methods: {
+    setRankMemoryByTag() {
+      const rankItem = {}
+      const q = this.apiQuests.filter((itemQuest) =>
+        itemQuest.assunto.includes(itemQuest)
+      )
+      console.log(q)
+      this.disponibleTags.forEach((item) => {
+        const questionsWithTag = this.apiQuests.filter((itemQuest) =>
+          itemQuest.assunto.includes('action')
+        )
+
+        rankItem[item] = questionsWithTag.reduce(
+          (acc, quest) => acc + quest.memory,
+          0
+        )
+      })
+      return rankItem
+    },
+
     startModal(image) {
       this.showModal = true
       this.modalImage = image

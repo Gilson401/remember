@@ -9,7 +9,7 @@
       >
         {{ tag }}</span
       >
-      , Memory Points: {{ item.memory }}
+      , Memory Points: {{ item.memory }} , id: {{ item._id }}
     </p>
     <details>
       <summary class="mb-2 text-2xl">{{ item.question }}</summary>
@@ -131,10 +131,10 @@ export default {
   @apply bg-blue-200;
 }
 .right {
-  @apply bg-green-200 transition ease-in-out duration-700;
+  @apply bg-green-200 transition ease-in-out duration-300;
 }
 
 .wrong {
-  @apply bg-red-200 transition ease-in-out duration-700;
+  @apply bg-red-200 transition ease-in-out duration-300;
 }
 </style>

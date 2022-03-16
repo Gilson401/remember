@@ -25,7 +25,7 @@ app.use('/remember', require('./routes/remember'))
 
 connectDB()
 app.get('/', (req, res) => {
-    res.send('Remember Hello World !')
+    res.send('O server do remember é nesta rota e está ON. Acesse <a href="localhost:3000"/>!')
 })
 
 

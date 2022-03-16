@@ -36,12 +36,21 @@
       rows="5"
       placeholder="Respostas"
     ></textarea>
+
     <button
-      class="ml-auto mb-2 bg-gray-500 text-white hover:bg-green-600 font-bold uppercase text-xs px-4 py-2 rounded w-28 shadow hover:shadow-md outline-none focus:outline-none mr-1 mb-1 ease-linear transition-all duration-150"
+      class="inline ml-auto mb-2 bg-gray-500 text-white hover:bg-green-600 font-bold uppercase text-xs px-4 py-2 rounded w-28 shadow hover:shadow-md outline-none focus:outline-none mr-1 mb-1 ease-linear transition-all duration-150"
       type="button"
       @click="submitQuestion()"
     >
       Cadastrar
+    </button>
+
+    <button
+      class="inline ml-auto mb-2 bg-gray-500 text-white hover:bg-green-600 font-bold uppercase text-xs px-4 py-2 rounded w-28 shadow hover:shadow-md outline-none focus:outline-none mr-1 mb-1 ease-linear transition-all duration-150"
+      type="button"
+      @click="clear()"
+    >
+      limpar
     </button>
   </form>
 </template>
@@ -60,15 +69,27 @@ export default {
   },
   methods: {
     async submitQuestion() {
-      const payload = {
-        memory: 0,
-        question: this.question,
-        image: this.image,
-        link: this.link.split(/\r?\n/),
-        assunto: this.assunto.split(/\r?\n/),
-        answer: this.answer.split(/\r?\n/)
+      try {
+        const payload = {
+          memory: 0,
+          question: this.question,
+          image: this.image,
+          link: this.link.split(/\r?\n/),
+          assunto: this.assunto.split(/\r?\n/),
+          answer: this.answer.split(/\r?\n/)
+        }
+        await this.$axios.post('http://localhost:3010/remember', payload)
+        alert('cadastro ok')
+      } catch (error) {
+        alert('Erro no cadastro')
       }
-      await this.$axios.post('http://localhost:3010/remember', payload)
+    },
+    clear() {
+      this.question = ''
+      this.image = ''
+      this.link = ''
+      this.assunto = ''
+      this.answer = ''
     }
   }
 }
