@@ -30,7 +30,6 @@ export default {
   },
   methods: {
     closeModal() {
-      console.log('close')
       this.$store.commit('display/SET_SHOW_MODAL', false)
     }
   }

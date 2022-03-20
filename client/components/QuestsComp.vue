@@ -1,9 +1,7 @@
 <template>
-  <div class="relative flex flex-col h-full flex-grow-0 bg-white w-full">
+  <div class="quest-comp flex flex-col h-screen flex-grow-0 bg-white w-full">
     <ModalImage :is-open="$store.state.display.showModal" :image="modalImage" />
-    <div
-      class="fixed top-0 w-full z-20 bg-white py-2 space-y-3 border-b-2 border-gray-100"
-    >
+    <div class="w-full py-2 space-y-3">
       <div class="text-6xl block">Questionário</div>
       <div class="flex items-center space-x-2">
         <label for="area">Assunto:</label>
@@ -15,7 +13,11 @@
           multiple
         >
           <option value="all">TODOS</option>
-          <option v-for="area in rankMemoryByTag" :key="area" :value="area[0]">
+          <option
+            v-for="(area, index) in tagsSortedByMemoryPoint"
+            :key="index"
+            :value="area[0]"
+          >
             {{ area[0].toUpperCase() }} / {{ area[1] }}
           </option>
         </select>
@@ -30,31 +32,28 @@
       </div>
     </div>
 
-    <div class="flex flex-col h-full flex-grow-0 mt-32 w-full">
-      <div
-        class="z-10 bg-cover overflow-hidden overflow-y-auto flex-grow flex-shrink-0 w-full"
-      >
+    <div
+      class="quests-container h-full flex flex-col w-full overflow-hidden overflow-y-auto p-5"
+    >
+      <div class="quest-items">
         <QuestItem
           v-for="(item, index) in currentList"
           :key="index"
           :item="item"
           :index="index"
         />
-
-        <div
-          class="bg-red-100 rounded w-full h-16 flex justify-center items-center mb-2"
-        >
-          <span v-if="currentList.length > 0"> FIM </span>
-          <span v-else> Selecione ao menos um item da lista de assuntos </span>
-        </div>
       </div>
+    </div>
+    <div
+      class="bg-red-100 rounded w-full h-16 flex justify-center items-center mb-2"
+    >
+      <span v-if="currentList.length > 0"> FIM </span>
+      <span v-else> Selecione ao menos um item da lista de assuntos </span>
     </div>
   </div>
 </template>
 
 <script>
-import quests from '../helpers/quests/index'
-
 export default {
   data() {
     return {
@@ -63,10 +62,7 @@ export default {
       apiQuests: [],
       currentArea: [],
       currentList: [],
-      filterTags: [],
-      listas: {
-        ...quests
-      }
+      filterTags: []
     }
   },
   async fetch() {
@@ -75,12 +71,6 @@ export default {
     )
   },
   computed: {
-    areas() {
-      return Object.keys(this.listas)
-    },
-    questions() {
-      return (param) => this.listas[param]
-    },
     disponibleTags() {
       let tags = []
       this.apiQuests.forEach((item) => {
@@ -103,6 +93,29 @@ export default {
         )
       })
       return Object.entries(rankItem)
+    },
+    tagsSortedByMemoryPoint() {
+      const rankItem = {}
+
+      this.disponibleTags.forEach((item) => {
+        const questionsWithTag = this.apiQuests.filter((itemQuest) =>
+          itemQuest.assunto.includes(item)
+        )
+
+        rankItem[item] = questionsWithTag.reduce(
+          (acc, quest) => acc + quest.memory,
+          0
+        )
+      })
+      return Object.entries(rankItem).sort(function (a, b) {
+        if (a[1] > b[1]) {
+          return 1
+        }
+        if (a[1] < b[1]) {
+          return -1
+        }
+        return 0
+      })
     }
   },
   mounted() {
@@ -111,10 +124,7 @@ export default {
   methods: {
     setRankMemoryByTag() {
       const rankItem = {}
-      const q = this.apiQuests.filter((itemQuest) =>
-        itemQuest.assunto.includes(itemQuest)
-      )
-      console.log(q)
+
       this.disponibleTags.forEach((item) => {
         const questionsWithTag = this.apiQuests.filter((itemQuest) =>
           itemQuest.assunto.includes('action')

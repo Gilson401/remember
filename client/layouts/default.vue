@@ -1,28 +1,40 @@
 <template>
-  <div class="flex items-start h-screen pl-64 relative">
-    <aside class="">
-      <!-- Sidebar -->
-      <nav
-        id="sidebarMenu"
-        class="h-screen fixed top-0 bottom-0 collapse d-lg-block sidebar collapse bg-white"
-      >
-        <div class="">
-          <div class="list-group list-group-flush mx-3 mt-4 text-2xl font-bold">
-            <ul>
-              <li @click="changeMode('form')">
-                <span class="mr-2">&#128221; </span>Form
-              </li>
-              <li @click="changeMode('quest')">
-                <span class="mr-2"> &#10067; </span>Quest
-              </li>
-            </ul>
-          </div>
-        </div>
-      </nav>
-      <!-- Sidebar -->
+  <div class="default_container">
+    <aside
+      class="h-screen px-4 flex flex-col flex-grow-0 border border-gray-200"
+    >
+      <div class="mb-4 text-2xl pt-4 border-b border-gray-200">
+        <ul>
+          <li @click="changeMode('form')">
+            <span class="mr-2">&#128221; </span>Form
+          </li>
+          <li @click="changeMode('quest')">
+            <span class="mr-2"> &#10067; </span>Quest
+          </li>
+        </ul>
+      </div>
+      <p class="text-2xl relative shadow-lg z-10">Lista de tags</p>
+      <div class="h-full flex flex-col overflow-hidden overflow-y-auto my-4">
+        <ul>
+          <li
+            v-for="(item, index) in tagsSortedByMemoryPoint"
+            :key="index"
+            class="block justify-between flex text-2xl"
+          >
+            <div>
+              {{ item[0] }}
+            </div>
+            <div>
+              {{ item[1] }}
+            </div>
+          </li>
+        </ul>
+      </div>
+      <div class="mb-4 text-2xl pt-4">Bottom element on aside</div>
     </aside>
-
-    <Nuxt />
+    <div class="content">
+      <Nuxt />
+    </div>
   </div>
 </template>
 
@@ -32,6 +44,11 @@ export default {
   data() {
     return {
       mode: 'quest'
+    }
+  },
+  computed: {
+    tagsSortedByMemoryPoint() {
+      return this.$store.getters['display/tagsSortedByMemoryPoint']
     }
   },
   mounted() {},
@@ -49,6 +66,26 @@ body,
 #__nuxt,
 #__layout {
   @apply h-full;
+}
+
+.default_container {
+  display: grid;
+  grid-template-areas:
+    'aside content     content     content     content     content'
+    'aside content content content content content'
+    'aside content content content content content';
+}
+
+aside {
+  grid-area: aside;
+}
+
+.top {
+  grid-area: top;
+}
+
+.content {
+  grid-area: content;
 }
 
 /* Sidebar */

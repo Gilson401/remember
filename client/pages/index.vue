@@ -1,14 +1,8 @@
 <template>
-  <main class="w-full pr-2 h-screen flex flex-col bg-white relative">
-    <QuestsComp
-      v-if="$store.state.display.mode === 'quest'"
-      class="pt-24 z-10"
-    />
+  <main class="pr-2 w-full h-full flex flex-col">
+    <QuestsComp v-if="$store.state.display.mode === 'quest'" />
 
-    <FormCreate
-      v-if="$store.state.display.mode === 'form'"
-      class="pt-24 z-10"
-    />
+    <FormCreate v-if="$store.state.display.mode === 'form'" />
   </main>
 </template>
 
