@@ -1,6 +1,6 @@
 <template>
   <div class="p-2 my-4 rounded w-full shadow-sm" :class="answerState">
-    <p class="ml-11 mb-2 font-bold">
+    <p v-if="$store.state.display.speakMode" class="ml-11 mb-2 font-bold">
       Index: {{ index }}, Tags:
       <span
         v-for="(tag, tagIndex) in item.assunto"
@@ -10,9 +10,14 @@
         {{ tag }}</span
       >
       , Memory Points: {{ item.memory }} , id: {{ item._id }}
+      <span v-if="item.lastDayVisited">
+        &#128467;&#65039; {{ item.lastDayVisited }}</span
+      >
     </p>
     <details>
-      <summary class="mb-2 text-2xl">{{ item.question }}</summary>
+      <summary class="mb-2 text-2xl">
+        {{ item.question.replace('#x', item.answer.length) }}
+      </summary>
 
       <ul class="ml-11 mb-2">
         <li v-for="(ritem, rindex) in item.answer" :key="rindex">
@@ -21,7 +26,7 @@
       </ul>
 
       <div v-if="item.link && item.link.length > 0">
-        <ul class="my-2">
+        <ul v-if="$store.state.display.speakMode" class="my-2">
           <li v-for="(link, i) in item.link" :key="i">
             <a
               v-if="link"
@@ -43,16 +48,19 @@
         @click="startModal(item.image)"
       />
 
-      <div class="flex w-full content-center h-10">
+      <div
+        v-if="$store.state.display.speakMode"
+        class="flex w-full content-center h-10"
+      >
         <button
-          class="ml-11 mb-2 bg-gray-500 text-white active:bg-gray-600 font-bold uppercase text-xs px-4 py-2 rounded shadow hover:shadow-md outline-none focus:outline-none mr-1 mb-1 ease-linear transition-all duration-150"
+          class="btn-memory"
           type="button"
           @click="updateQuestMemoryPoint(1, item)"
         >
           Acertou
         </button>
         <button
-          class="ml-11 mb-2 bg-gray-500 text-white active:bg-gray-600 font-bold uppercase text-xs px-4 py-2 rounded shadow hover:shadow-md outline-none focus:outline-none mr-1 mb-1 ease-linear transition-all duration-150"
+          class="btn-memory"
           type="button"
           @click="updateQuestMemoryPoint(-1, item)"
         >
@@ -68,10 +76,22 @@
         </button>
       </div>
     </details>
-    <textarea
-      class="w-full xl:w-2/3 rounded bg-gray-100 text-2xl"
-      :style="{ height: `${item.answer.length * 30}px` }"
-    />
+    <div
+      class="inline-block grid grid-cols-12 gap-2 place-content-center w-full"
+      :style="{ 'min-height': `${item.answer.length * 35 + 2}px` }"
+    >
+      <textarea
+        v-model="answerCount"
+        class="w-full rounded bg-gray-100 text-2xl col-span-10"
+        :style="{ height: `${item.answer.length * 35}px` }"
+      />
+
+      <div
+        class="h-10 w-10 leading-10 text-center text-3xl my-auto text-blue-800 mx-2 bg-red-300 col-span-2 rounded-full"
+      >
+        {{ countLinesAnswer }}
+      </div>
+    </div>
   </div>
 </template>
 
@@ -85,11 +105,22 @@ export default {
     index: {
       type: Number,
       default: 0
+    },
+    currentDay: {
+      type: String,
+      default: ''
     }
   },
   data() {
     return {
-      answerState: 'undefined'
+      answerState: 'undefined',
+      answerCount: ''
+    }
+  },
+  computed: {
+    countLinesAnswer() {
+      return this.answerCount.split(/\r?\n/).filter((item) => item.length > 0)
+        .length
     }
   },
   methods: {
@@ -102,7 +133,8 @@ export default {
     async updateQuestMemoryPoint(value, item) {
       try {
         await this.$axios.patch(`http://localhost:3010/remember/${item._id}`, {
-          memory: value + item.memory
+          memory: value + item.memory,
+          lastDayVisited: this.currentDay
         })
 
         if (value > 0) {
@@ -136,5 +168,13 @@ export default {
 
 .wrong {
   @apply bg-red-200 transition ease-in-out duration-300;
+}
+input,
+textarea {
+  @apply px-2;
+}
+.btn-memory {
+  @apply ml-11 mb-2 bg-gray-500 text-white bg-gray-200 font-bold uppercase text-xs px-4 py-2 rounded shadow 
+  hover:shadow-md outline-none focus:outline-none mr-1 mb-1 ease-linear transition-all duration-150;
 }
 </style>

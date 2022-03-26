@@ -29,6 +29,14 @@
         >
           Montar
         </button>
+
+        <button
+          type="button"
+          class="inline-block px-6 py-2.5 bg-blue-600 text-white font-medium text-xs leading-tight uppercase rounded shadow-md hover:bg-blue-700 hover:shadow-lg focus:bg-blue-700 focus:shadow-lg focus:outline-none focus:ring-0 active:bg-blue-800 active:shadow-lg transition duration-150 ease-in-out"
+          @click="setCurrentListOnlyNegative"
+        >
+          NEGATIVAS
+        </button>
       </div>
     </div>
 
@@ -41,6 +49,7 @@
           :key="index"
           :item="item"
           :index="index"
+          :current-day="currentDay"
         />
       </div>
     </div>
@@ -59,18 +68,26 @@ export default {
     return {
       showModal: false,
       modalImage: '',
-      apiQuests: [],
+      //   apiQuests: [],
       currentArea: [],
       currentList: [],
       filterTags: []
     }
   },
-  async fetch() {
-    this.apiQuests = await fetch('http://localhost:3010/remember').then((res) =>
-      res.json()
-    )
-  },
+  //   async fetch() {
+  //     this.apiQuests = await fetch('http://localhost:3010/remember').then((res) =>
+  //       res.json()
+  //     )
+  //   },
+
   computed: {
+    apiQuests() {
+      return this.$store.state.display.items
+    },
+    currentDay() {
+      return new Date().toISOString().split('T')[0]
+    },
+
     disponibleTags() {
       let tags = []
       this.apiQuests.forEach((item) => {
@@ -116,12 +133,33 @@ export default {
         }
         return 0
       })
+    },
+    allListOrder() {
+      return [...this.apiQuests].sort(this.sorter)
+    },
+    assuntoListed() {
+      return [
+        ...this.apiQuests
+          .filter((item) => {
+            return this.compareArrayItems(this.currentArea, item.assunto)
+          })
+          .sort(this.sorter)
+      ]
     }
   },
   mounted() {
     this.setRankMemoryByTag()
   },
   methods: {
+    sorter(a, b) {
+      if (a.memory > b.memory) {
+        return 1
+      }
+      if (a.memory < b.memory) {
+        return -1
+      }
+      return 0
+    },
     setRankMemoryByTag() {
       const rankItem = {}
 
@@ -150,21 +188,16 @@ export default {
       }
 
       if (this.currentArea.includes('all')) {
-        this.currentList = this.apiQuests.sort(function (a, b) {
-          if (a.memory > b.memory) {
-            return 1
-          }
-          if (a.memory < b.memory) {
-            return -1
-          }
-          return 0
-        })
+        this.currentList = this.allListOrder
         return
       }
 
+      this.currentList = this.assuntoListed
+    },
+    setCurrentListOnlyNegative() {
       this.currentList = this.apiQuests
         .filter((item) => {
-          return this.compareArrayItems(this.currentArea, item.assunto)
+          return item.memory < 0 && !item.assunto.includes('opcoes')
         })
         .sort(function (a, b) {
           if (a.memory > b.memory) {

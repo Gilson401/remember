@@ -7,7 +7,6 @@
     <!-- Modal Content (The Image) -->
     <img
       v-if="$store.state.display.modalImage"
-      id="modalImageID"
       :src="require(`~/assets/${$store.state.display.modalImage}`)"
       class="modal-content"
     />
@@ -37,17 +36,6 @@ export default {
 </script>
 
 <style scoped>
-#myImg {
-  border-radius: 5px;
-  cursor: pointer;
-  transition: 0.3s;
-}
-
-#myImg:hover {
-  opacity: 0.7;
-}
-
-/* The Modal (background) */
 .modal {
   display: block; /* Hidden by default */
   position: fixed; /* Stay in place */
@@ -67,7 +55,7 @@ export default {
   margin: auto;
   display: block;
   width: 80%;
-  max-width: 700px;
+  /* max-width: 1000px; */
 }
 
 /* Caption of Modal Image (Image Text) - Same Width as the Image */

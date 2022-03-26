@@ -1,10 +1,19 @@
+import Vue from 'vue'
 export const state = () => {
     return {
         mode: 'quest',
         showModal: false,
         modalImage: '',
         items: [],
-        disponibleTags: []
+        disponibleTags: [],
+        speakMode: true,
+        lastPersistedItem: {},
+        currentTest: {
+            questionsQtd: 0,
+            totalAnswered: 0,
+            rightAnswers: 0,
+            wrongAnswers: 0
+        }
     }
 }
 
@@ -29,6 +38,24 @@ export const mutations = {
     UPDATE_ITEM(state, items) {
         state.items = items
     },
+    ADD_ITEM(state, item) {
+        const index = state.items.findIndex((i) => i._id === item._id)
+        if (index >= 0) {
+            Vue.set(state.items, index, item)
+        } else {
+            state.items.push(item)
+        }
+    },
+    SET_LAST_PERSISTED_ITEM(state, item) {
+        state.lastPersistedItem = item
+    },
+
+    SET_CURRENT_TEST(state, data) {
+        state.currentTest = {
+            ...state.currentTest,
+            ...data
+        }
+    }
 
 }
 
@@ -40,6 +67,16 @@ export const actions = {
 
         commit('SET_ITEMS', data)
 
+    },
+
+    async create({ commit }, payload) {
+        const persistedQuestion = await this.$axios.post(
+            'http://localhost:3010/remember',
+            payload
+        )
+        const data = persistedQuestion.data
+        commit('ADD_ITEM', data)
+        commit('SET_LAST_PERSISTED_ITEM', data)
     },
 
     async updateQuestMemoryPoint({ commit }, value, item) {
@@ -55,9 +92,22 @@ export const actions = {
             }
 
             commit('UPDATE_ITEM', updated)
+            commit('SET_LAST_PERSISTED_ITEM', updated)
 
         } catch (error) {
             alert(`Não foi possível atualizar  ${item._id}`)
+        }
+    },
+    async update({ commit }, payload) {
+        try {
+            const updated = await this.$axios.patch(`http://localhost:3010/remember/${payload._id}`, {
+                ...payload
+            })
+
+            commit('ADD_ITEM', updated.data)
+            commit('SET_LAST_PERSISTED_ITEM', updated.data)
+        } catch (error) {
+            alert(`Não foi possível atualizar  ${payload._id}`)
         }
     },
     async deleteQuestItem({ commit }, id) {
@@ -73,6 +123,7 @@ export const actions = {
 }
 
 export const getters = {
+
     disponibleTags(state) {
         let tags = []
         state.items.forEach((item) => {

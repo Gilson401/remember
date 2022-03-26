@@ -13,7 +13,7 @@ const QuestSchema = new Schema({
     answer: [String],
     link: [String],
     image: String,
-
+    lastDayVisited: String,
 }, opts);
 
 module.exports = mongoose.model('quest', QuestSchema);

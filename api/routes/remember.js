@@ -48,11 +48,12 @@ router.patch('/:questId', [
         let bodyRequest = request.body
 
         const update = { $set: bodyRequest }
+
         const updatedQuestion = await QuestsModel.findByIdAndUpdate(id, update, { new: true })
         if (updatedQuestion) {
             res.send(updatedQuestion)
         } else {
-            res.status(404).send({ error: MSGS.USER404 })
+            res.status(404).send({ error: 'Não identificado ou atualizado' })
         }
     } catch (err) {
         res.status(500).send({ "error": err.message })

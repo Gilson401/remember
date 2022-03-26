@@ -3,17 +3,23 @@
     <aside
       class="h-screen px-4 flex flex-col flex-grow-0 border border-gray-200"
     >
-      <div class="mb-4 text-2xl pt-4 border-b border-gray-200">
+      <div class="mb-4 text-2xl pt-4 border-b border-gray-200 cursor-pointer">
         <ul>
-          <li @click="changeMode('form')">
+          <li
+            class="hover:bg-gray-300 transition ease-in duration-300 py-2"
+            @click="changeMode('form')"
+          >
             <span class="mr-2">&#128221; </span>Form
           </li>
-          <li @click="changeMode('quest')">
+          <li
+            class="hover:bg-gray-300 transition ease-in duration-300 py-2"
+            @click="changeMode('quest')"
+          >
             <span class="mr-2"> &#10067; </span>Quest
           </li>
         </ul>
       </div>
-      <p class="text-2xl relative shadow-lg z-10">Lista de tags</p>
+      <p class="text-2xl py-2">Lista de tags</p>
       <div class="h-full flex flex-col overflow-hidden overflow-y-auto my-4">
         <ul>
           <li

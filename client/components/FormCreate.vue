@@ -39,22 +39,35 @@
       class="h-14"
       placeholder="Image file name"
     />
+    <input
+      v-model="lastDayVisited"
+      type="text"
+      name="image"
+      class="h-14"
+      placeholder="lastday"
+    />
+    <input
+      v-model="memory"
+      type="number"
+      name="image"
+      class="h-14"
+      placeholder="memory point"
+    />
 
     <div>
-      <button
-        class="inline mb-2 bg-gray-500 text-white hover:bg-green-600 font-bold uppercase text-xs px-4 py-2 rounded w-28 shadow hover:shadow-md outline-none focus:outline-none mr-1 mb-1 ease-linear transition-all duration-150"
-        type="button"
-        @click="submitQuestion()"
-      >
+      <button class="form-button" type="button" @click="submitQuestion()">
         Cadastrar
       </button>
 
-      <button
-        class="inline mb-2 bg-gray-500 text-white hover:bg-green-600 font-bold uppercase text-xs px-4 py-2 rounded w-28 shadow hover:shadow-md outline-none focus:outline-none mr-1 mb-1 ease-linear transition-all duration-150"
-        type="button"
-        @click="clear()"
-      >
-        limpar
+      <button class="form-button" type="button" @click="clear()">limpar</button>
+
+      <input v-model="editingItemId" type="text" placeholder="id" />
+      <button class="form-button" type="button" @click="showByid()">
+        showByid
+      </button>
+
+      <button class="form-button" type="button" @click="updateQuestion()">
+        update
       </button>
     </div>
 
@@ -81,7 +94,10 @@ export default {
       image: '',
       link: '',
       assunto: '',
-      answer: ''
+      answer: '',
+      editingItemId: '',
+      questionItem: {},
+      lastDayVisited: ''
     }
   },
   methods: {
@@ -95,13 +111,32 @@ export default {
           assunto: this.assunto.split(/\r?\n/),
           answer: this.answer.split(/\r?\n/)
         }
-        const persistedQuestion = await this.$axios.post(
-          'http://localhost:3010/remember',
-          payload
-        )
-
-        const { _id } = persistedQuestion.data
-        this.lastCreatedStaus = `Criado ${_id}: ${persistedQuestion.data.question}`
+        await this.$store.dispatch('display/create', payload)
+        const { _id } = this.$store.state.display.lastPersistedItem
+        this.lastCreatedStaus = `Criado ${_id}: ${this.question}`
+        alert(this.lastCreatedStaus)
+      } catch (error) {
+        alert('Erro no cadastro')
+        this.lastCreatedStaus = `Não Cadastrado ${this.question} `
+      }
+    },
+    async updateQuestion() {
+      if (!this.editingItemId) {
+        alert('É necessário informar um id para editar uma questão.')
+      }
+      try {
+        const payload = {
+          memory: 0,
+          question: this.question,
+          image: this.image,
+          link: this.link.split(/\r?\n/),
+          assunto: this.assunto.split(/\r?\n/),
+          answer: this.answer.split(/\r?\n/),
+          _id: this.editingItemId
+        }
+        await this.$store.dispatch('display/update', payload)
+        const { _id } = this.$store.state.display.lastPersistedItem
+        this.lastCreatedStaus = `Atualizado ${_id}: ${this.question}`
         alert(this.lastCreatedStaus)
       } catch (error) {
         alert('Erro no cadastro')
@@ -115,6 +150,23 @@ export default {
       this.assunto = ''
       this.answer = ''
       this.lastCreatedStaus = ''
+      this.editingItemId = ''
+      this.memory = ''
+      this.lastDayVisited = ''
+    },
+    showByid() {
+      const currentItem = this.$store.state.display.items.find(
+        (item) => item._id === this.editingItemId.replace('', '')
+      )
+
+      if (!currentItem) return
+
+      this.questionItem = { ...currentItem }
+      this.question = currentItem.question
+      this.image = currentItem.image
+      this.link = currentItem.link.join('\r\n')
+      this.assunto = currentItem.assunto.join('\r\n')
+      this.answer = currentItem.answer.join('\r\n')
     }
   }
 }
@@ -122,5 +174,13 @@ export default {
 <style lang="postcss" scoped>
 .width-clamp {
   width: clamp(300px, 60vw, 1000px);
+}
+input,
+textarea {
+  @apply px-2;
+}
+
+.form-button {
+  @apply inline mb-2 bg-gray-500 text-white hover:bg-green-600 font-bold uppercase text-xs px-4 py-2 rounded w-28 shadow hover:shadow-md outline-none focus:outline-none mr-1 mb-1 ease-linear transition-all duration-150;
 }
 </style>
