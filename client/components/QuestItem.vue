@@ -87,7 +87,7 @@
       />
 
       <div
-        class="h-10 w-10 leading-10 text-center text-3xl my-auto text-blue-800 mx-2 bg-red-300 col-span-2 rounded-full"
+        class="w-max h-max p-4 inline-block leading-10 text-center text-3xl my-auto text-blue-800 mx-2 bg-red-300 col-span-2 rounded-full"
       >
         {{ countLinesAnswer }}
       </div>

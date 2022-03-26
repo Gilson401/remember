@@ -2,41 +2,40 @@
   <div class="quest-comp flex flex-col h-screen flex-grow-0 bg-white w-full">
     <ModalImage :is-open="$store.state.display.showModal" :image="modalImage" />
     <div class="w-full py-2 space-y-3">
-      <div class="text-6xl block">Questionário</div>
-      <div class="flex items-center space-x-2">
-        <label for="area">Assunto:</label>
-        <select
-          id="area"
-          v-model="currentArea"
-          class="form-select appearance-none block w-64 px-3 py-1.5 text-base font-normal text-gray-700 bg-white bg-clip-padding bg-no-repeat border border-solid border-gray-300 rounded transition ease-in-out m-0 focus:text-gray-700 focus:bg-white focus:border-blue-600 focus:outline-none"
-          name="area"
-          multiple
-        >
-          <option value="all">TODOS</option>
-          <option
-            v-for="(area, index) in tagsSortedByMemoryPoint"
-            :key="index"
-            :value="area[0]"
+      <div class="px-2">
+        <div class="text-6xl block">Questionário</div>
+
+        <div class="h-auto flex flex-wrap items-center space-x-3">
+          <label for="area">Assunto:</label>
+          <select
+            id="area"
+            v-model="currentArea"
+            class="form-select appearance-none block w-64 px-3 py-1.5 text-base font-normal text-gray-700 bg-white bg-clip-padding bg-no-repeat border border-solid border-gray-300 rounded transition ease-in-out m-0 focus:text-gray-700 focus:bg-white focus:border-blue-600 focus:outline-none"
+            name="area"
+            multiple
           >
-            {{ area[0].toUpperCase() }} / {{ area[1] }}
-          </option>
-        </select>
+            <option value="all">TODOS</option>
+            <option
+              v-for="(area, index) in tagsSortedByMemoryPoint"
+              :key="index"
+              :value="area[0]"
+            >
+              {{ area[0].toUpperCase() }} / {{ area[1] }}
+            </option>
+          </select>
 
-        <button
-          type="button"
-          class="inline-block px-6 py-2.5 bg-blue-600 text-white font-medium text-xs leading-tight uppercase rounded shadow-md hover:bg-blue-700 hover:shadow-lg focus:bg-blue-700 focus:shadow-lg focus:outline-none focus:ring-0 active:bg-blue-800 active:shadow-lg transition duration-150 ease-in-out"
-          @click="setCurrentList"
-        >
-          Montar
-        </button>
+          <button type="button" class="form-btn" @click="setCurrentList">
+            Montar
+          </button>
 
-        <button
-          type="button"
-          class="inline-block px-6 py-2.5 bg-blue-600 text-white font-medium text-xs leading-tight uppercase rounded shadow-md hover:bg-blue-700 hover:shadow-lg focus:bg-blue-700 focus:shadow-lg focus:outline-none focus:ring-0 active:bg-blue-800 active:shadow-lg transition duration-150 ease-in-out"
-          @click="setCurrentListOnlyNegative"
-        >
-          NEGATIVAS
-        </button>
+          <button
+            type="buttons"
+            class="form-btn"
+            @click="setCurrentListOnlyNegative"
+          >
+            NEGATIVAS
+          </button>
+        </div>
       </div>
     </div>
 
@@ -215,3 +214,11 @@ export default {
   }
 }
 </script>
+
+<style lang="postcss" scoped>
+.form-btn {
+  @apply h-10 inline-block px-6 py-2.5 bg-blue-600 text-white font-medium text-xs leading-tight uppercase 
+  rounded shadow-md hover:bg-blue-700 hover:shadow-lg focus:bg-blue-700 focus:shadow-lg 
+  focus:outline-none focus:ring-0 transition duration-150 ease-in-out;
+}
+</style>
