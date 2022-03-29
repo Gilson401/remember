@@ -35,6 +35,13 @@
           >
             NEGATIVAS
           </button>
+          <button
+            type="buttons"
+            class="form-btn"
+            @click="setCurrentListLongDays"
+          >
+            Não Vista há 3 dias ou mais
+          </button>
         </div>
       </div>
     </div>
@@ -55,7 +62,9 @@
     <div
       class="bg-red-100 rounded w-full h-16 flex justify-center items-center mb-2"
     >
-      <span v-if="currentList.length > 0"> FIM </span>
+      <span v-if="currentList.length > 0">
+        {{ currentList.length }} itens do teste atual
+      </span>
       <span v-else> Selecione ao menos um item da lista de assuntos </span>
     </div>
   </div>
@@ -73,15 +82,13 @@ export default {
       filterTags: []
     }
   },
-  //   async fetch() {
-  //     this.apiQuests = await fetch('http://localhost:3010/remember').then((res) =>
-  //       res.json()
-  //     )
-  //   },
 
   computed: {
     apiQuests() {
       return this.$store.state.display.items
+    },
+    getQuestionsByLongVisited() {
+      return this.$store.getters['display/getQuestionsByLongVisited']
     },
     currentDay() {
       return new Date().toISOString().split('T')[0]
@@ -191,7 +198,46 @@ export default {
         return
       }
 
+      // getQuestionsByLongVisited
       this.currentList = this.assuntoListed
+    },
+    setCurrentListLongDays() {
+      debugger
+
+      if (this.currentArea.length === 0) {
+        alert('Selecione pelo menos 1 item da lista de assuntos')
+        return
+      }
+
+      let temp = []
+      temp = this.getQuestionsByLongVisited.filter((item) => {
+        return !item.assunto.includes('opcoes')
+      })
+
+      temp = temp.filter((item) => {
+        return this.currentArea.includes('all')
+          ? true
+          : this.compareArrayItems(this.currentArea, item.assunto)
+      })
+
+      temp = temp.filter((item) => {
+        return item.daysLong > 10
+      })
+      temp = temp.sort(function (a, b) {
+        if (a.memory > b.memory) {
+          return 1
+        }
+        if (a.memory < b.memory) {
+          return -1
+        }
+        return 0
+      })
+
+      if (temp.length === 0) {
+        alert('Não retornou itens')
+      }
+
+      this.currentList = temp
     },
     setCurrentListOnlyNegative() {
       this.currentList = this.apiQuests

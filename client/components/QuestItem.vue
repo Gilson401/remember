@@ -1,6 +1,6 @@
 <template>
   <div class="p-2 my-4 rounded w-full shadow-sm" :class="answerState">
-    <p v-if="$store.state.display.speakMode" class="ml-11 mb-2 font-bold">
+    <p v-if="$store.state.display.showMetaData" class="ml-11 mb-2 font-bold">
       Index: {{ index }}, Tags:
       <span
         v-for="(tag, tagIndex) in item.assunto"
@@ -19,14 +19,14 @@
         {{ item.question.replace('#x', item.answer.length) }}
       </summary>
 
-      <ul class="ml-11 mb-2">
+      <ul class="ml-11 mb-2 text-2xl">
         <li v-for="(ritem, rindex) in item.answer" :key="rindex">
           {{ rindex + 1 }} - {{ ritem }}
         </li>
       </ul>
 
       <div v-if="item.link && item.link.length > 0">
-        <ul v-if="$store.state.display.speakMode" class="my-2">
+        <ul v-if="$store.state.display.showMetaData" class="my-2">
           <li v-for="(link, i) in item.link" :key="i">
             <a
               v-if="link"
@@ -49,7 +49,7 @@
       />
 
       <div
-        v-if="$store.state.display.speakMode"
+        v-if="$store.state.display.showMetaData"
         class="flex w-full content-center h-10"
       >
         <button
@@ -89,7 +89,7 @@
       <div
         class="w-max h-max p-4 inline-block leading-10 text-center text-3xl my-auto text-blue-800 mx-2 bg-red-300 col-span-2 rounded-full"
       >
-        {{ countLinesAnswer }}
+        {{ countLinesAnswer }}/{{ item.answer.length }}
       </div>
     </div>
   </div>
@@ -176,5 +176,11 @@ textarea {
 .btn-memory {
   @apply ml-11 mb-2 bg-gray-500 text-white bg-gray-200 font-bold uppercase text-xs px-4 py-2 rounded shadow 
   hover:shadow-md outline-none focus:outline-none mr-1 mb-1 ease-linear transition-all duration-150;
+}
+
+img {
+  @apply cursor-pointer;
+  aspect-ratio: 2;
+  width: 150px;
 }
 </style>
