@@ -6,7 +6,7 @@ export const state = () => {
         modalImage: '',
         items: [],
         disponibleTags: [],
-        speakMode: true,
+        showMetaData: true,
         lastPersistedItem: {},
         currentTest: {
             questionsQtd: 0,
@@ -169,5 +169,44 @@ export const getters = {
             }
             return 0
         })
+    },
+    getQuestionsByLongVisited(state) {
+
+        function getNumberOfDays(start, end) {
+            const date1 = new Date(start);
+            const date2 = new Date(end);
+
+            // One day in milliseconds
+            const oneDay = 1000 * 60 * 60 * 24;
+
+            // Calculating the time difference between two dates
+            const diffInTime = date2.getTime() - date1.getTime();
+
+            // Calculating the no. of days between two dates
+            const diffInDays = Math.round(diffInTime / oneDay);
+
+            return diffInDays;
+        }
+
+        function trataItem(item) {
+
+            if (!item.lastDayVisited) {
+                item.lastDayVisited = '2022-03-01'
+            }
+
+            item.daysLong = getNumberOfDays(item.lastDayVisited, Date.now())
+            return item
+        }
+
+        return state.items.map((i) => trataItem(i)).sort(function (a, b) {
+            if (a.daysLong > b.daysLong) {
+                return -1;
+            }
+            if (a.daysLong < b.daysLong) {
+                return 1;
+            }
+            return 0;
+        });
+
     }
 }
