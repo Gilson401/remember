@@ -3,10 +3,28 @@
   <div v-if="isOpen" id="myModal" class="modal">
     <!-- The Close Button -->
     <span class="close" @click="closeModal">&times;</span>
+    <div v-if="$store.state.display.modalImages.length > 0">
+      <button class="buttons-change left-0" @click="toggleLeft">
+        &#128072;
+      </button>
+      <button class="buttons-change right-0" @click="toggleRight">
+        &#128073;
+      </button>
+      <!-- Modal Content (The Image) -->
 
-    <!-- Modal Content (The Image) -->
+      <div
+        v-for="(picture, index) in $store.state.display.modalImages"
+        :key="index"
+      >
+        <img
+          v-if="imageIndex === index"
+          :src="require(`~/assets/${picture}`)"
+          class="modal-content"
+        />
+      </div>
+    </div>
     <img
-      v-if="$store.state.display.modalImage"
+      v-else-if="$store.state.display.modalImage"
       :src="require(`~/assets/${$store.state.display.modalImage}`)"
       class="modal-content"
     />
@@ -27,15 +45,44 @@ export default {
       type: Boolean
     }
   },
+  data() {
+    return {
+      imageIndex: 0
+    }
+  },
+
+  computed: {
+    getModalImage() {
+      return `~/assets/${
+        this.$store.state.display.modalImages[this.imageIndex]
+      }`
+    }
+  },
   methods: {
     closeModal() {
       this.$store.commit('display/SET_SHOW_MODAL', false)
+    },
+    toggleLeft() {
+      this.imageIndex--
+
+      if (this.imageIndex < 0) {
+        this.imageIndex = this.$store.state.display.modalImages.length - 1
+      }
+    },
+    toggleRight() {
+      this.imageIndex++
+      if (this.imageIndex > this.$store.state.display.modalImages.length - 1) {
+        this.imageIndex = 0
+      }
     }
   }
 }
 </script>
 
-<style scoped>
+<style lang="postcss" scoped>
+.buttons-change {
+  @apply mx-10 p-2 bg-white bg-opacity-50 w-20 h-20 rounded-full absolute top-1/2 text-2xl leading-5 text-center;
+}
 .modal {
   display: block; /* Hidden by default */
   position: fixed; /* Stay in place */

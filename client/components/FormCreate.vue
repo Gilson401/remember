@@ -8,7 +8,7 @@
       cols="30"
       rows="5"
       placeholder="Assuntos tag"
-    ></textarea>
+    />
     <input
       v-model="question"
       required
@@ -24,14 +24,14 @@
       cols="30"
       rows="5"
       placeholder="Respostas"
-    ></textarea>
+    />
     <textarea
       v-model="link"
       name="link"
       cols="30"
       rows="5"
       placeholder="Links"
-    ></textarea>
+    />
     <input
       v-model="image"
       type="text"
@@ -39,10 +39,19 @@
       class="h-14"
       placeholder="Image file name"
     />
+
+    <textarea
+      v-model="images"
+      name="images"
+      cols="30"
+      rows="5"
+      placeholder="Múltiplas imagens"
+    />
+
     <input
       v-model="lastDayVisited"
       type="text"
-      name="image"
+      name="lastDayVisited"
       class="h-14"
       placeholder="lastday"
     />
@@ -61,7 +70,7 @@
 
       <button class="form-button" type="button" @click="clear()">limpar</button>
 
-      <input v-model="editingItemId" type="text" placeholder="id" />
+      <input v-model.trim="editingItemId" type="text" placeholder="id" />
       <button class="form-button" type="button" @click="showByid()">
         showByid
       </button>
@@ -92,6 +101,7 @@ export default {
       memory: 0,
       question: '',
       image: '',
+      images: '',
       link: '',
       assunto: '',
       answer: '',
@@ -107,6 +117,7 @@ export default {
           memory: 0,
           question: this.question,
           image: this.image,
+          images: this.images.split(/\r?\n/),
           link: this.link.split(/\r?\n/),
           assunto: this.assunto.split(/\r?\n/),
           answer: this.answer.split(/\r?\n/)
@@ -129,6 +140,7 @@ export default {
           memory: 0,
           question: this.question,
           image: this.image,
+          images: this.images.split(/\r?\n/),
           link: this.link.split(/\r?\n/),
           assunto: this.assunto.split(/\r?\n/),
           answer: this.answer.split(/\r?\n/),

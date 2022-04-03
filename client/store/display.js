@@ -4,6 +4,7 @@ export const state = () => {
         mode: 'quest',
         showModal: false,
         modalImage: '',
+        modalImages: [],
         items: [],
         disponibleTags: [],
         showMetaData: true,
@@ -27,6 +28,11 @@ export const mutations = {
     SET_SHOW_MODAL_IMAGE(state, image) {
         state.modalImage = image
     },
+
+    SET_SHOW_MODAL_IMAGES(state, images) {
+        state.modalImages = images
+    },
+
     SET_ITEMS(state, items) {
         state.items = items
     },

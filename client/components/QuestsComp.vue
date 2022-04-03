@@ -35,12 +35,26 @@
           >
             NEGATIVAS
           </button>
-          <button
-            type="buttons"
-            class="form-btn"
-            @click="setCurrentListLongDays"
-          >
-            Não Vista há 3 dias ou mais
+
+          <div class="mx-2 p-1 border border-gray-200 rounded text-center">
+            <input
+              v-model="daysLong"
+              class="w-20 h-10 border border-black rounded text-center"
+              type="number"
+              name="daysLong"
+            />
+
+            <button
+              type="buttons"
+              class="form-btn"
+              @click="setCurrentListLongDays"
+            >
+              Não Vista há {{ daysLong }} dias ou mais
+            </button>
+          </div>
+
+          <button type="button" class="form-btn" @click="setOnlyOptions">
+            Opções
           </button>
         </div>
       </div>
@@ -76,7 +90,7 @@ export default {
     return {
       showModal: false,
       modalImage: '',
-      //   apiQuests: [],
+      daysLong: 10,
       currentArea: [],
       currentList: [],
       filterTags: []
@@ -187,6 +201,11 @@ export default {
       this.modalImage = image
       this.$store.commit('display/SET_SHOW_MODAL', true)
     },
+    setOnlyOptions() {
+      this.currentList = this.allListOrder.filter((item) =>
+        item.assunto.includes('opcoes')
+      )
+    },
     setCurrentList() {
       if (this.currentArea.length === 0) {
         alert('Selecione pelo menos 1 item da lista de assuntos')
@@ -194,16 +213,15 @@ export default {
       }
 
       if (this.currentArea.includes('all')) {
-        this.currentList = this.allListOrder
+        this.currentList = this.allListOrder.filter(
+          (item) => !item.assunto.includes('opcoes')
+        )
         return
       }
 
-      // getQuestionsByLongVisited
       this.currentList = this.assuntoListed
     },
     setCurrentListLongDays() {
-      debugger
-
       if (this.currentArea.length === 0) {
         alert('Selecione pelo menos 1 item da lista de assuntos')
         return
@@ -221,7 +239,7 @@ export default {
       })
 
       temp = temp.filter((item) => {
-        return item.daysLong > 10
+        return item.daysLong > this.daysLong
       })
       temp = temp.sort(function (a, b) {
         if (a.memory > b.memory) {

@@ -14,6 +14,7 @@
         &#128467;&#65039; {{ item.lastDayVisited }}</span
       >
     </p>
+    <!-- <p>&#128270; &#128065;&#65039;</p> -->
     <details>
       <summary class="mb-2 text-2xl">
         {{ item.question.replace('#x', item.answer.length) }}
@@ -45,8 +46,18 @@
         class="ml-11 mb-2"
         :src="require(`~/assets/${item.image}`)"
         :alt="item.image"
-        @click="startModal(item.image)"
+        @click="startModal(item)"
       />
+
+      <div v-else-if="item.images" class="flex">
+        <img
+          v-for="(preview, i) in item.images"
+          :key="i"
+          :src="require(`~/assets/${preview}`)"
+          class="m-1"
+          @click="startModal(item)"
+        />
+      </div>
 
       <div
         v-if="$store.state.display.showMetaData"
@@ -124,10 +135,15 @@ export default {
     }
   },
   methods: {
-    startModal(image) {
+    startModal(item) {
       this.showModal = true
-      this.modalImage = image
-      this.$store.commit('display/SET_SHOW_MODAL_IMAGE', image)
+      //   this.modalImage = image.image
+      this.$store.commit('display/SET_SHOW_MODAL_IMAGE', item.image)
+
+      if (item.images) {
+        this.$store.commit('display/SET_SHOW_MODAL_IMAGES', item.images)
+      }
+
       this.$store.commit('display/SET_SHOW_MODAL', true)
     },
     async updateQuestMemoryPoint(value, item) {
