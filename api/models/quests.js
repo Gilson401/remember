@@ -13,6 +13,7 @@ const QuestSchema = new Schema({
     answer: [String],
     link: [String],
     image: String,
+    images: [String],
     lastDayVisited: String,
 }, opts);
 
