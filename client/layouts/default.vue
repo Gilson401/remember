@@ -5,17 +5,15 @@
     >
       <div class="mb-4 text-2xl pt-4 border-b border-gray-200 cursor-pointer">
         <ul>
-          <li
-            class="hover:bg-gray-300 transition ease-in duration-300 py-2"
-            @click="changeMode('form')"
-          >
-            <span class="mr-2">&#128221; </span>Form
+          <li class="hover:bg-gray-300 transition ease-in duration-300 py-2">
+            <NuxtLink to="/form"
+              ><span class="mr-2">&#128221; </span>Form</NuxtLink
+            >
           </li>
-          <li
-            class="hover:bg-gray-300 transition ease-in duration-300 py-2"
-            @click="changeMode('quest')"
-          >
-            <span class="mr-2"> &#10067; </span>Quest
+          <li class="hover:bg-gray-300 transition ease-in duration-300 py-2">
+            <NuxtLink to="/"
+              ><span class="mr-2"> &#10067; </span>Quest</NuxtLink
+            >
           </li>
         </ul>
       </div>

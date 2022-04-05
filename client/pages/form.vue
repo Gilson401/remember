@@ -8,13 +8,6 @@
 export default {
   name: 'IndexPage',
   layout: 'default',
-
-  //   data() {
-  //     return {
-  //       allMemoryItems: [],
-  //       inUseSelection: []
-  //     }
-  //   },
   head() {
     return {
       title: 'Form'

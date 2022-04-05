@@ -37,13 +37,11 @@ export const mutations = {
         state.items = items
     },
 
-    DELETE_ITEM(state, items) {
-        state.items = items
+    DELETE_ITEM(state, id) {
+        const index = state.items.findIndex((i) => i.id === id)
+        if (index >= 0) state.items.splice(index, 1)
     },
 
-    UPDATE_ITEM(state, items) {
-        state.items = items
-    },
     ADD_ITEM(state, item) {
         const index = state.items.findIndex((i) => i._id === item._id)
         if (index >= 0) {
@@ -69,15 +67,15 @@ export const actions = {
 
     async index({ commit }) {
 
-        const data = await this.$axios.$get('http://localhost:3010/remember')
+        const data = await this.$api.$get('remember')
 
         commit('SET_ITEMS', data)
 
     },
 
     async create({ commit }, payload) {
-        const persistedQuestion = await this.$axios.post(
-            'http://localhost:3010/remember',
+        const persistedQuestion = await this.$api.post(
+            'remember',
             payload
         )
         const data = persistedQuestion.data
@@ -85,28 +83,19 @@ export const actions = {
         commit('SET_LAST_PERSISTED_ITEM', data)
     },
 
-    async updateQuestMemoryPoint({ commit }, value, item) {
-        try {
-            const updated = await this.$axios.patch(`http://localhost:3010/remember/${item._id}`, {
-                memory: value + item.memory
-            })
+    async updateQuestMemoryPoint({ commit }, payload) {
 
-            if (value > 0) {
-                this.answerState = 'right'
-            } else {
-                this.answerState = 'wrong'
-            }
+        const updated = await this.$api.patch(`remember/${payload._id}`, {
+            ...payload
+        })
 
-            commit('UPDATE_ITEM', updated)
-            commit('SET_LAST_PERSISTED_ITEM', updated)
+        commit('ADD_ITEM', updated.data)
+        commit('SET_LAST_PERSISTED_ITEM', updated.data)
 
-        } catch (error) {
-            alert(`Não foi possível atualizar  ${item._id}`)
-        }
     },
     async update({ commit }, payload) {
         try {
-            const updated = await this.$axios.patch(`http://localhost:3010/remember/${payload._id}`, {
+            const updated = await this.$api.patch(`remember/${payload._id}`, {
                 ...payload
             })
 
@@ -117,13 +106,8 @@ export const actions = {
         }
     },
     async deleteQuestItem({ commit }, id) {
-        try {
-            await this.$axios.delete(`http://localhost:3010/remember/${id}`)
-
-            commit('DELETE_ITEM', id)
-        } catch (error) {
-            alert(`Não foi possível deletar  ${id}`)
-        }
+        await this.$api.delete(`remember/${id}`)
+        commit('DELETE_ITEM', id)
     }
 
 }

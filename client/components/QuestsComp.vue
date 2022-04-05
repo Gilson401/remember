@@ -36,7 +36,13 @@
             NEGATIVAS
           </button>
 
-          <div class="mx-2 p-1 border border-gray-200 rounded text-center">
+          <button type="button" class="form-btn" @click="setOnlyOptions">
+            Opções
+          </button>
+
+          <div
+            class="space-x-2 items-stretch flex mx-2 p-1 border border-gray-200 rounded text-center"
+          >
             <input
               v-model="daysLong"
               class="w-20 h-10 border border-black rounded text-center"
@@ -52,10 +58,6 @@
               Não Vista há {{ daysLong }} dias ou mais
             </button>
           </div>
-
-          <button type="button" class="form-btn" @click="setOnlyOptions">
-            Opções
-          </button>
         </div>
       </div>
     </div>
@@ -63,15 +65,13 @@
     <div
       class="quests-container h-full flex flex-col w-full overflow-hidden overflow-y-auto p-5"
     >
-      <div class="quest-items">
-        <QuestItem
-          v-for="(item, index) in currentList"
-          :key="index"
-          :item="item"
-          :index="index"
-          :current-day="currentDay"
-        />
-      </div>
+      <QuestItem
+        v-for="(item, index) in currentList"
+        :key="index"
+        :item="item"
+        :index="index"
+        :current-day="currentDay"
+      />
     </div>
     <div
       class="bg-red-100 rounded w-full h-16 flex justify-center items-center mb-2"

@@ -1,96 +1,100 @@
 <template>
-  <form class="flex flex-col space-y-4 width-clamp rounded bg-blue-100 p-4">
-    <h1 class="text-6xl block">Form Cadastro Questão</h1>
-    <textarea
-      v-model="assunto"
-      required
-      name="assunto"
-      cols="30"
-      rows="5"
-      placeholder="Assuntos tag"
-    />
-    <input
-      v-model="question"
-      required
-      type="text"
-      name="question"
-      placeholder="Questão"
-      class="h-14"
-    />
-    <textarea
-      v-model="answer"
-      required
-      name="answer"
-      cols="30"
-      rows="5"
-      placeholder="Respostas"
-    />
-    <textarea
-      v-model="link"
-      name="link"
-      cols="30"
-      rows="5"
-      placeholder="Links"
-    />
-    <input
-      v-model="image"
-      type="text"
-      name="image"
-      class="h-14"
-      placeholder="Image file name"
-    />
+  <div class="bg-blue-100 w-full h-screen">
+    <form class="flex flex-col space-y-4 width-clamp rounded p-4">
+      <h1 class="text-5xl block">Cadastro de Questão</h1>
+      <textarea
+        v-model="assunto"
+        required
+        name="assunto"
+        cols="30"
+        rows="3"
+        placeholder="Assuntos tag"
+      />
+      <input
+        v-model="question"
+        required
+        type="text"
+        name="question"
+        placeholder="Questão"
+        class="h-14"
+      />
+      <textarea
+        v-model="answer"
+        required
+        name="answer"
+        cols="30"
+        rows="3"
+        placeholder="Respostas"
+      />
+      <textarea
+        v-model="link"
+        name="link"
+        cols="30"
+        rows="3"
+        placeholder="Links"
+      />
+      <input
+        v-model="image"
+        type="text"
+        name="image"
+        class="h-14"
+        placeholder="Image file name"
+      />
 
-    <textarea
-      v-model="images"
-      name="images"
-      cols="30"
-      rows="5"
-      placeholder="Múltiplas imagens"
-    />
+      <textarea
+        v-model="images"
+        name="images"
+        cols="30"
+        rows="3"
+        placeholder="Múltiplas imagens"
+      />
 
-    <input
-      v-model="lastDayVisited"
-      type="text"
-      name="lastDayVisited"
-      class="h-14"
-      placeholder="lastday"
-    />
-    <input
-      v-model="memory"
-      type="number"
-      name="image"
-      class="h-14"
-      placeholder="memory point"
-    />
+      <input
+        v-model="lastDayVisited"
+        type="text"
+        name="lastDayVisited"
+        class="h-14"
+        placeholder="lastday"
+      />
+      <input
+        v-model="memory"
+        type="number"
+        name="image"
+        class="h-14"
+        placeholder="memory point"
+      />
 
-    <div>
-      <button class="form-button" type="button" @click="submitQuestion()">
-        Cadastrar
-      </button>
+      <div>
+        <button class="form-button" type="button" @click="submit()">
+          {{ `${questionItem._id ? 'Atualizar' : 'Cadastrar'}` }}
+        </button>
 
-      <button class="form-button" type="button" @click="clear()">limpar</button>
+        <button class="form-button" type="button" @click="clear()">
+          limpar
+        </button>
 
-      <input v-model.trim="editingItemId" type="text" placeholder="id" />
-      <button class="form-button" type="button" @click="showByid()">
-        showByid
-      </button>
+        <input v-model.trim="editingItemId" type="text" placeholder="id" />
+        <button class="form-button" type="button" @click="showByid()">
+          showByid
+        </button>
 
-      <button class="form-button" type="button" @click="updateQuestion()">
-        update
-      </button>
-    </div>
+        <!-- <button class="form-button" type="button" @click="updateQuestion()">
+        Update
+      </button> -->
+      </div>
 
-    <div
-      class="w-full h-10"
-      :class="{
-        hidden: !lastCreatedStaus,
-        'bg-red-200': lastCreatedStaus.includes('Não'),
-        'bg-green-200': lastCreatedStaus.includes('Criado')
-      }"
-    >
-      {{ lastCreatedStaus }}
-    </div>
-  </form>
+      <div
+        class="w-full h-10"
+        :class="{
+          hidden: !lastCreatedStaus,
+          'bg-red-200': lastCreatedStaus.includes('Não'),
+          'bg-green-200': lastCreatedStaus.includes('Criado')
+        }"
+      >
+        {{ lastCreatedStaus }}
+      </div>
+    </form>
+  </div>
 </template>
 
 <script>
@@ -110,19 +114,32 @@ export default {
       lastDayVisited: ''
     }
   },
+  computed: {
+    getPayload() {
+      const payload = {
+        memory: 0,
+        question: this.question,
+        image: this.image,
+        images: this.images.split(/\r?\n/).filter((i) => i),
+        link: this.link.split(/\r?\n/).filter((i) => i),
+        assunto: this.assunto.split(/\r?\n/).filter((i) => i),
+        answer: this.answer.split(/\r?\n/).filter((i) => i)
+      }
+      if (this.editingItemId) payload._id = this.editingItemId
+      return payload
+    }
+  },
   methods: {
+    submit() {
+      if (this.questionItem._id) {
+        this.updateQuestion()
+      } else {
+        this.submitQuestion()
+      }
+    },
     async submitQuestion() {
       try {
-        const payload = {
-          memory: 0,
-          question: this.question,
-          image: this.image,
-          images: this.images.split(/\r?\n/),
-          link: this.link.split(/\r?\n/),
-          assunto: this.assunto.split(/\r?\n/),
-          answer: this.answer.split(/\r?\n/)
-        }
-        await this.$store.dispatch('display/create', payload)
+        await this.$store.dispatch('display/create', this.getPayload)
         const { _id } = this.$store.state.display.lastPersistedItem
         this.lastCreatedStaus = `Criado ${_id}: ${this.question}`
         alert(this.lastCreatedStaus)
@@ -136,17 +153,7 @@ export default {
         alert('É necessário informar um id para editar uma questão.')
       }
       try {
-        const payload = {
-          memory: 0,
-          question: this.question,
-          image: this.image,
-          images: this.images.split(/\r?\n/),
-          link: this.link.split(/\r?\n/),
-          assunto: this.assunto.split(/\r?\n/),
-          answer: this.answer.split(/\r?\n/),
-          _id: this.editingItemId
-        }
-        await this.$store.dispatch('display/update', payload)
+        await this.$store.dispatch('display/update', this.getPayload)
         const { _id } = this.$store.state.display.lastPersistedItem
         this.lastCreatedStaus = `Atualizado ${_id}: ${this.question}`
         alert(this.lastCreatedStaus)
@@ -165,6 +172,7 @@ export default {
       this.editingItemId = ''
       this.memory = ''
       this.lastDayVisited = ''
+      this.questionItem = {}
     },
     showByid() {
       const currentItem = this.$store.state.display.items.find(

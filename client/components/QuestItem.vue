@@ -14,9 +14,9 @@
         &#128467;&#65039; {{ item.lastDayVisited }}</span
       >
     </p>
-    <!-- <p>&#128270; &#128065;&#65039;</p> -->
-    <details>
-      <summary class="mb-2 text-2xl">
+
+    <details class="w-full">
+      <summary class="mb-2 text-2xl w-full">
         {{ item.question.replace('#x', item.answer.length) }}
       </summary>
 
@@ -45,15 +45,17 @@
         v-if="item.image"
         class="ml-11 mb-2"
         :src="require(`~/assets/${item.image}`)"
+        :title="item.image"
         :alt="item.image"
         @click="startModal(item)"
       />
 
-      <div v-else-if="item.images" class="flex">
+      <div v-else-if="item.images" class="flex ml-11 w-full overflow-x-auto">
         <img
           v-for="(preview, i) in item.images"
           :key="i"
           :src="require(`~/assets/${preview}`)"
+          :title="item.image"
           class="m-1"
           @click="startModal(item)"
         />
@@ -65,21 +67,31 @@
       >
         <button
           class="btn-memory"
+          :class="{
+            'cursor-not-allowed': answerState !== 'undefined',
+            'cursor-pointer': answerState === 'undefined'
+          }"
           type="button"
+          :disabled="answerState !== 'undefined'"
           @click="updateQuestMemoryPoint(1, item)"
         >
           Acertou
         </button>
         <button
           class="btn-memory"
+          :class="{
+            'cursor-not-allowed': answerState !== 'undefined',
+            'cursor-pointer': answerState === 'undefined'
+          }"
           type="button"
+          :disabled="answerState !== 'undefined'"
           @click="updateQuestMemoryPoint(-1, item)"
         >
           Errou
         </button>
 
         <button
-          class="bg-red-500 text-white active:bg-red-600 font-bold uppercase text-xs px-4 py-2 rounded shadow hover:shadow-md outline-none focus:outline-none ml-auto mb-1 ease-linear transition-all duration-150"
+          class="bg-red-500 text-white active:bg-red-600 font-bold uppercase text-xs px-4 py-2 rounded shadow hover:shadow-md outline-none focus:outline-none ml-40 mb-1 ease-linear transition-all duration-150"
           type="button"
           @click="deleteQuestItem(item)"
         >
@@ -137,7 +149,6 @@ export default {
   methods: {
     startModal(item) {
       this.showModal = true
-      //   this.modalImage = image.image
       this.$store.commit('display/SET_SHOW_MODAL_IMAGE', item.image)
 
       if (item.images) {
@@ -148,10 +159,12 @@ export default {
     },
     async updateQuestMemoryPoint(value, item) {
       try {
-        await this.$axios.patch(`http://localhost:3010/remember/${item._id}`, {
+        const payload = {
+          _id: item._id,
           memory: value + item.memory,
           lastDayVisited: this.currentDay
-        })
+        }
+        await this.$store.dispatch('display/updateQuestMemoryPoint', payload)
 
         if (value > 0) {
           this.answerState = 'right'
@@ -164,7 +177,7 @@ export default {
     },
     async deleteQuestItem(item) {
       try {
-        await this.$axios.delete(`http://localhost:3010/remember/${item._id}`)
+        await this.$store.dispatch('display/deleteQuestItem', item._id)
         alert(`Deletado  para ${item._id}`)
       } catch (error) {
         alert(`Não foi possível deletar  ${item._id}`)
@@ -195,7 +208,6 @@ textarea {
 }
 
 img {
-  @apply cursor-pointer;
   aspect-ratio: 2;
   width: 150px;
 }
