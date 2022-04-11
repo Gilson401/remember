@@ -7,12 +7,12 @@
         <ul>
           <li class="hover:bg-gray-300 transition ease-in duration-300 py-2">
             <NuxtLink to="/form"
-              ><span class="mr-2">&#128221; </span>Form</NuxtLink
+              ><span class="mr-2">&#128221; </span>Formulário</NuxtLink
             >
           </li>
           <li class="hover:bg-gray-300 transition ease-in duration-300 py-2">
             <NuxtLink to="/"
-              ><span class="mr-2"> &#10067; </span>Quest</NuxtLink
+              ><span class="mr-2"> &#10067; </span>Questionário</NuxtLink
             >
           </li>
         </ul>
@@ -34,7 +34,7 @@
           </li>
         </ul>
       </div>
-      <div class="mb-4 text-2xl pt-4">Bottom element on aside</div>
+      <div class="mb-4 text-2xl pt-4">Dev Solutions</div>
     </aside>
     <div class="content">
       <Nuxt />

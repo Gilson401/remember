@@ -43,7 +43,6 @@
 
       <img
         v-if="item.image"
-        class="ml-11 mb-2"
         :src="require(`~/assets/${item.image}`)"
         :title="item.image"
         :alt="item.image"
@@ -55,8 +54,8 @@
           v-for="(preview, i) in item.images"
           :key="i"
           :src="require(`~/assets/${preview}`)"
-          :title="item.image"
-          class="m-1"
+          :title="preview"
+          :alt="preview"
           @click="startModal(item)"
         />
       </div>
@@ -210,5 +209,6 @@ textarea {
 img {
   aspect-ratio: 2;
   width: 150px;
+  @apply ml-11 mb-2 cursor-pointer;
 }
 </style>

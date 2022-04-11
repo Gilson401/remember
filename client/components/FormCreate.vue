@@ -1,5 +1,5 @@
 <template>
-  <div class="bg-blue-100 w-full h-screen">
+  <div class="bg-blue-100 w-full h-screen overflow-hidden overflow-y-auto">
     <form class="flex flex-col space-y-4 width-clamp rounded p-4">
       <h1 class="text-5xl block">Cadastro de Questão</h1>
       <textarea
@@ -165,6 +165,7 @@ export default {
     clear() {
       this.question = ''
       this.image = ''
+      this.images = ''
       this.link = ''
       this.assunto = ''
       this.answer = ''
@@ -184,6 +185,7 @@ export default {
       this.questionItem = { ...currentItem }
       this.question = currentItem.question
       this.image = currentItem.image
+      this.images = currentItem.images.join('\r\n')
       this.link = currentItem.link.join('\r\n')
       this.assunto = currentItem.assunto.join('\r\n')
       this.answer = currentItem.answer.join('\r\n')
