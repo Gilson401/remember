@@ -5,19 +5,32 @@
     >
       <div class="mb-4 text-2xl pt-4 border-b border-gray-200 cursor-pointer">
         <ul>
-          <li class="hover:bg-gray-300 transition ease-in duration-300 py-2">
+          <li class="options">
             <NuxtLink to="/form"
               ><span class="mr-2">&#128221; </span>Formulário</NuxtLink
             >
           </li>
-          <li class="hover:bg-gray-300 transition ease-in duration-300 py-2">
+          <li class="options">
             <NuxtLink to="/"
               ><span class="mr-2"> &#10067; </span>Questionário</NuxtLink
             >
           </li>
         </ul>
       </div>
+      
+
+
+
       <p class="text-2xl py-2">Lista de tags</p>
+      <select
+        v-model="$store.state.display.sorting"
+        class="options text-2xl"
+      >
+        <option value="" disabled>Ordene</option>
+        <option value="alfabetical" >Ordenar por Alfabético</option>
+        <option value="memoryPoints" >Ordenar por Ponto de Memória</option>
+      </select>
+
       <div class="h-full flex flex-col overflow-hidden overflow-y-auto my-4">
         <ul>
           <li
@@ -34,7 +47,19 @@
           </li>
         </ul>
       </div>
-      <div class="mb-4 text-2xl pt-4">Dev Solutions</div>
+      <div class="mb-4 text-2xl pt-4">
+
+       <span>&#9881;</span>   
+      <select
+        v-model="$store.state.display.showMetaData"
+        class="options text-2xl"
+      >
+        <option value="" disabled>Show Meta</option>
+        <option :value="true" >Exibir Metadata</option>
+        <option :value="false" >Ocultar Metadata</option>
+      </select>
+
+      </div>
     </aside>
     <div class="content">
       <Nuxt />
@@ -52,7 +77,12 @@ export default {
   },
   computed: {
     tagsSortedByMemoryPoint() {
-      return this.$store.getters['display/tagsSortedByMemoryPoint']
+
+    const data = {
+        memoryPoints: this.$store.getters['display/tagsSortedByMemoryPoint'],
+        alfabetical: this.$store.getters['display/tagsAndMemoryPointAlphabetical']
+    } 
+      return data[this.$store.state.display.sorting]
     }
   },
   mounted() {},
@@ -65,6 +95,11 @@ export default {
 </script>
 
 <style lang="postcss" scoped>
+
+.options {
+    @apply hover:bg-gray-300 transition ease-in duration-300 py-2;
+}
+
 html,
 body,
 #__nuxt,
@@ -92,33 +127,4 @@ aside {
   grid-area: content;
 }
 
-/* Sidebar */
-.sidebar {
-  /* position: relative; */
-  top: 0;
-  bottom: 0;
-  left: 0;
-  padding: 58px 20px 0; /* Height of navbar */
-  box-shadow: 0 2px 5px 0 rgb(0 0 0 / 5%), 0 2px 10px 0 rgb(0 0 0 / 5%);
-  width: 240px;
-}
-
-@media (max-width: 991.98px) {
-  .sidebar {
-    width: 100%;
-  }
-}
-.sidebar .active {
-  border-radius: 5px;
-  box-shadow: 0 2px 5px 0 rgb(0 0 0 / 16%), 0 2px 10px 0 rgb(0 0 0 / 12%);
-}
-
-.sidebar-sticky {
-  @apply relative pt-2 overflow-hidden;
-
-  top: 0;
-  height: calc(100vh - 48px);
-
-  overflow-y: auto; /* Scrollable contents if viewport is shorter than content. */
-}
 </style>

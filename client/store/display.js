@@ -1,13 +1,14 @@
 import Vue from 'vue'
 export const state = () => {
     return {
-        mode: 'quest',
+        // mode: 'quest',
         showModal: false,
         modalImage: '',
         modalImages: [],
         items: [],
         disponibleTags: [],
         showMetaData: true,
+        sorting: 'memoryPoints',
         lastPersistedItem: {},
         currentTest: {
             questionsQtd: 0,
@@ -19,9 +20,10 @@ export const state = () => {
 }
 
 export const mutations = {
-    SET_MODE(state, mode) {
-        state.mode = mode
+    SET_SHOW_METADATA(state, value) {
+        state.showMetaData = value
     },
+
     SET_SHOW_MODAL(state, mode) {
         state.showModal = mode
     },
@@ -113,6 +115,9 @@ export const actions = {
 }
 
 export const getters = {
+    getMetadataMode(state) {
+        return state.showMetaData
+    },
 
     disponibleTags(state) {
         let tags = []
