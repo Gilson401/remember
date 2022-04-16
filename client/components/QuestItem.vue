@@ -21,7 +21,12 @@
       </summary>
 
       <ul class="ml-11 mb-2 text-2xl">
-        <li v-for="(ritem, rindex) in item.answer" :key="rindex">
+        <li
+          v-for="(ritem, rindex) in item.answer"
+          ref="answerRef"
+          :key="rindex"
+          class="answer"
+        >
           {{ rindex + 1 }} - {{ ritem }}
         </li>
       </ul>
@@ -145,7 +150,22 @@ export default {
         .length
     }
   },
+
+  mounted() {
+    this.addMethodToAnwer()
+  },
+
   methods: {
+    addMethodToAnwer() {
+      const ary = Array.prototype.slice.call(
+        document.querySelectorAll('.answer')
+      )
+      ary.forEach(function (el) {
+        el.addEventListener('click', function (evt) {
+          this.classList.toggle('highlighted')
+        })
+      })
+    },
     startModal(item) {
       this.showModal = true
       this.$store.commit('display/SET_SHOW_MODAL_IMAGE', item.image)
@@ -187,6 +207,10 @@ export default {
 </script>
 
 <style lang="postcss" scoped>
+
+.answer.highlighted{
+    @apply text-indigo-700 underline font-bold;
+}
 .undefined {
   @apply bg-blue-200;
 }
