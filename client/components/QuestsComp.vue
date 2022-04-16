@@ -209,18 +209,15 @@ export default {
     setCurrentList() {
         if (this.currentArea.length === 0) {
             alert('Selecione pelo menos 1 item da lista de assuntos')
-        return
-      }
-
-      if (this.currentArea.includes('all')) {
+      }else if (this.currentArea.includes('all')) {
           this.currentList = [...this.allListOrder.filter(
               (item) => !item.assunto.includes('opcoes')
           )]
-        return
-      }
-            debugger
+      }else {
+          this .currentList = this.assuntoListed
 
-      this.currentList = this.assuntoListed
+      }
+
     },
     setCurrentListLongDays() {
       if (this.currentArea.length === 0) {

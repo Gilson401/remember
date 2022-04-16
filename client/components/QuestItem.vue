@@ -15,94 +15,101 @@
       >
     </p>
 
-    <details class="w-full">
-      <summary class="mb-2 text-2xl w-full">
+    <div class="w-full">
+
+       <p class="ml-2 mb-2 text-2xl w-full">
+
+      <span class="ml-11 mb-2 text-2xl cursor-pointer" @click="showResp = !showResp">
+        &#128064;
+      </span>
+
         {{ item.question.replace('#x', item.answer.length) }}
-      </summary>
+      </p>
 
-      <ul class="ml-11 mb-2 text-2xl">
-        <li
-          v-for="(ritem, rindex) in item.answer"
-          ref="answerRef"
-          :key="rindex"
-          class="answer"
-        >
-          {{ rindex + 1 }} - {{ ritem }}
-        </li>
-      </ul>
-
-      <div v-if="item.link && item.link.length > 0">
-        <ul v-if="$store.state.display.showMetaData" class="my-2">
-          <li v-for="(link, i) in item.link" :key="i">
-            <a
-              v-if="link"
-              :href="link"
-              target="_blank"
-              class="inline-block ml-11 text-blue-400 font-bold"
-            >
-              &#127760; {{ link }}
-            </a>
-          </li>
+      <div v-show="showResp">
+        <ul class="ml-11 mb-2 text-2xl">
+          <QuestItemListItem
+            v-for="(ritem, rindex) in item.answer"
+            ref="answerRef"
+            :key="rindex"
+          >
+            {{ rindex + 1 }} - {{ ritem }}
+          </QuestItemListItem>
         </ul>
-      </div>
 
-      <img
-        v-if="item.image"
-        :src="require(`~/assets/${item.image}`)"
-        :title="item.image"
-        :alt="item.image"
-        @click="startModal(item)"
-      />
+        <div v-if="item.link && item.link.length > 0">
+          <ul v-if="$store.state.display.showMetaData" class="my-2">
+            <li v-for="(link, i) in item.link" :key="i">
+              <a
+                v-if="link"
+                :href="link"
+                target="_blank"
+                class="inline-block ml-11 text-blue-400 font-bold"
+              >
+                &#127760; {{ link }}
+              </a>
+            </li>
+          </ul>
+        </div>
 
-      <div v-else-if="item.images" class="flex ml-11 w-full overflow-x-auto">
         <img
-          v-for="(preview, i) in item.images"
-          :key="i"
-          :src="require(`~/assets/${preview}`)"
-          :title="preview"
-          :alt="preview"
+          v-if="item.image"
+          :src="require(`~/assets/${item.image}`)"
+          :title="item.image"
+          :alt="item.image"
           @click="startModal(item)"
         />
-      </div>
 
-      <div
-        v-if="$store.state.display.showMetaData"
-        class="flex w-full content-center h-10"
-      >
-        <button
-          class="btn-memory"
-          :class="{
-            'cursor-not-allowed': answerState !== 'undefined',
-            'cursor-pointer': answerState === 'undefined'
-          }"
-          type="button"
-          :disabled="answerState !== 'undefined'"
-          @click="updateQuestMemoryPoint(1, item)"
-        >
-          Acertou
-        </button>
-        <button
-          class="btn-memory"
-          :class="{
-            'cursor-not-allowed': answerState !== 'undefined',
-            'cursor-pointer': answerState === 'undefined'
-          }"
-          type="button"
-          :disabled="answerState !== 'undefined'"
-          @click="updateQuestMemoryPoint(-1, item)"
-        >
-          Errou
-        </button>
+        <div v-else-if="item.images" class="flex ml-11 w-full overflow-x-auto">
+          <img
+            v-for="(preview, i) in item.images"
+            :key="i"
+            :src="require(`~/assets/${preview}`)"
+            :title="preview"
+            :alt="preview"
+            @click="startModal(item)"
+          />
+        </div>
 
-        <button
-          class="bg-red-500 text-white active:bg-red-600 font-bold uppercase text-xs px-4 py-2 rounded shadow hover:shadow-md outline-none focus:outline-none ml-40 mb-1 ease-linear transition-all duration-150"
-          type="button"
-          @click="deleteQuestItem(item)"
+        <div
+          v-if="$store.state.display.showMetaData"
+          class="flex w-full content-center h-10"
         >
-          Delete
-        </button>
+          <button
+            class="btn-memory"
+            :class="{
+              'cursor-not-allowed': answerState !== 'undefined',
+              'cursor-pointer': answerState === 'undefined'
+            }"
+            type="button"
+            :disabled="answerState !== 'undefined'"
+            @click="updateQuestMemoryPoint(1, item)"
+          >
+            Acertou
+          </button>
+          <button
+            class="btn-memory"
+            :class="{
+              'cursor-not-allowed': answerState !== 'undefined',
+              'cursor-pointer': answerState === 'undefined'
+            }"
+            type="button"
+            :disabled="answerState !== 'undefined'"
+            @click="updateQuestMemoryPoint(-1, item)"
+          >
+            Errou
+          </button>
+
+          <button
+            class="bg-red-500 text-white active:bg-red-600 font-bold uppercase text-xs px-4 py-2 rounded shadow hover:shadow-md outline-none focus:outline-none ml-40 mb-1 ease-linear transition-all duration-150"
+            type="button"
+            @click="deleteQuestItem(item)"
+          >
+            Delete
+          </button>
+        </div>
       </div>
-    </details>
+    </div>
     <div
       class="inline-block grid grid-cols-12 gap-2 place-content-center w-full"
       :style="{ 'min-height': `${item.answer.length * 35 + 2}px` }"
@@ -141,7 +148,8 @@ export default {
   data() {
     return {
       answerState: 'undefined',
-      answerCount: ''
+      answerCount: '',
+      showResp: false
     }
   },
   computed: {
@@ -151,21 +159,7 @@ export default {
     }
   },
 
-  mounted() {
-    this.addMethodToAnwer()
-  },
-
   methods: {
-    addMethodToAnwer() {
-      const ary = Array.prototype.slice.call(
-        document.querySelectorAll('.answer')
-      )
-      ary.forEach(function (el) {
-        el.addEventListener('click', function (evt) {
-          this.classList.toggle('highlighted')
-        })
-      })
-    },
     startModal(item) {
       this.showModal = true
       this.$store.commit('display/SET_SHOW_MODAL_IMAGE', item.image)
@@ -207,10 +201,6 @@ export default {
 </script>
 
 <style lang="postcss" scoped>
-
-.answer.highlighted{
-    @apply text-indigo-700 underline font-bold;
-}
 .undefined {
   @apply bg-blue-200;
 }
