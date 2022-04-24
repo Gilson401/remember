@@ -1,6 +1,22 @@
 <template>
   <main class="mx-4">
-    <h1 class="text-2xl">Gestão de questões</h1>
+
+            <div class="mb-4 text-2xl pt-4 border-b border-gray-200 cursor-pointer">
+        <ul>
+          <li class="options">
+            <NuxtLink to="/form"
+              ><span class="mr-2">&#128221; </span>Formulário</NuxtLink
+            >
+          </li>
+          <li class="options">
+            <NuxtLink to="/"
+              ><span class="mr-2"> &#10067; </span>Questionário</NuxtLink
+            >
+          </li>
+        </ul>
+      </div>
+
+    <h1 class="text-6xl">Gestão de questões</h1>
 
     <div class="my-4 items-stretch flex">
       <button

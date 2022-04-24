@@ -15,6 +15,11 @@
               ><span class="mr-2"> &#10067; </span>Questionário</NuxtLink
             >
           </li>
+          <li class="options">
+            <NuxtLink to="/list"
+              ><span class="mr-2"> &#128203; Gestão </span>  </NuxtLink
+            >
+          </li>
         </ul>
       </div>
 
