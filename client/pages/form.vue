@@ -15,6 +15,4 @@ export default {
   }
 }
 </script>
-<style lang="postcss" scoped>
-
-</style>
+<style lang="postcss" scoped></style>

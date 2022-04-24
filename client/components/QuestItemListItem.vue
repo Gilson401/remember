@@ -1,30 +1,30 @@
 <template>
-  <li 
-  class="border-transparent border-none"
-  :class="{highlighted: isClicked}"
-  @click="toggleIsClicked"
+  <li
+    class="border-transparent border-none"
+    :class="{ highlighted: isClicked }"
+    @click="toggleIsClicked"
   >
-      <slot/>
+    <slot />
   </li>
 </template>
 
 <script>
 export default {
-data(){
+  data() {
     return {
-        isClicked: false,
+      isClicked: false
     }
-},
-methods:{
-    toggleIsClicked (){
-        this.isClicked = !this.isClicked
+  },
+  methods: {
+    toggleIsClicked() {
+      this.isClicked = !this.isClicked
     }
-}
+  }
 }
 </script>
 
 <style lang="postcss" scopped>
-.highlighted{
-    @apply text-indigo-700 underline font-bold;
+.highlighted {
+  @apply text-indigo-700 underline font-bold;
 }
 </style>

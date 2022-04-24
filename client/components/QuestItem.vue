@@ -16,12 +16,13 @@
     </p>
 
     <div class="w-full">
-
-       <p class="ml-2 mb-2 text-2xl w-full">
-
-      <span class="ml-11 mb-2 text-2xl cursor-pointer" @click="showResp = !showResp">
-        &#128064;
-      </span>
+      <p class="ml-2 mb-2 text-2xl w-full">
+        <span
+          class="ml-11 mb-2 text-2xl cursor-pointer"
+          @click="showResp = !showResp"
+        >
+          &#128064;
+        </span>
 
         {{ item.question.replace('#x', item.answer.length) }}
       </p>
@@ -98,14 +99,6 @@
             @click="updateQuestMemoryPoint(-1, item)"
           >
             Errou
-          </button>
-
-          <button
-            class="bg-red-500 text-white active:bg-red-600 font-bold uppercase text-xs px-4 py-2 rounded shadow hover:shadow-md outline-none focus:outline-none ml-40 mb-1 ease-linear transition-all duration-150"
-            type="button"
-            @click="deleteQuestItem(item)"
-          >
-            Delete
           </button>
         </div>
       </div>

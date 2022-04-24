@@ -1,4 +1,4 @@
 {
-    "eslint.format.enable": true,
-    "vetur.format.defaultFormatter.html": "prettier"
-  }
+  "eslint.format.enable": true,
+  "vetur.format.defaultFormatter.html": "prettier"
+}

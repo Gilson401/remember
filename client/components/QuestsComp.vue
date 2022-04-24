@@ -207,17 +207,17 @@ export default {
       )
     },
     setCurrentList() {
-        if (this.currentArea.length === 0) {
-            alert('Selecione pelo menos 1 item da lista de assuntos')
-      }else if (this.currentArea.includes('all')) {
-          this.currentList = [...this.allListOrder.filter(
-              (item) => !item.assunto.includes('opcoes')
-          )]
-      }else {
-          this .currentList = this.assuntoListed
-
+      if (this.currentArea.length === 0) {
+        alert('Selecione pelo menos 1 item da lista de assuntos')
+      } else if (this.currentArea.includes('all')) {
+        this.currentList = [
+          ...this.allListOrder.filter(
+            (item) => !item.assunto.includes('opcoes')
+          )
+        ]
+      } else {
+        this.currentList = this.assuntoListed
       }
-
     },
     setCurrentListLongDays() {
       if (this.currentArea.length === 0) {

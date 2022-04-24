@@ -4,9 +4,9 @@
 
     <div class="my-4 items-stretch flex">
       <button
-        :disabled="!this.paginationData.prevPage"
+        :disabled="!paginationData.prevPage"
         :class="{
-          'cursor-not-allowed bg-opacity-20': !this.paginationData.prevPage
+          'cursor-not-allowed bg-opacity-20': !paginationData.prevPage
         }"
         @click="goPrevious"
         class="bg-gray-600"
@@ -19,18 +19,18 @@
       <button
         @click="goNext"
         class="bg-gray-600"
-        :disabled="!this.paginationData.nextPage"
+        :disabled="!paginationData.nextPage"
         :class="{
-          'cursor-not-allowed bg-opacity-20': !this.paginationData.nextPage
+          'cursor-not-allowed bg-opacity-20': !paginationData.nextPage
         }"
       >
         Next
       </button>
 
       <select
-        class="outline-none ml-4 rounded-sm  mb-1 px-4 py-1  border border-gray-500"
+        class="outline-none ml-4 rounded-sm mb-1 px-4 py-1 border border-gray-500"
         @change="setPageSize($event.target.value)"
-        >
+      >
         <option value="" selected disabled hidden>Qtd por pagina</option>
         <option value="5">5</option>
         <option value="10">10</option>
@@ -117,13 +117,10 @@ export default {
   },
   mounted() {},
   methods: {
-    async setPageSize(e){
-          this.$store.commit(
-            'display/SET_PAGE_LIMIT',
-            parseInt(e)
-          )
-          await this.$store.dispatch('display/indexPaginate')
-    },  
+    async setPageSize(e) {
+      this.$store.commit('display/SET_PAGE_LIMIT', parseInt(e))
+      await this.$store.dispatch('display/indexPaginate')
+    },
     async goNext() {
       if (this.paginationData.nextPage) {
         this.$store.commit('display/SET_PARAMS', {

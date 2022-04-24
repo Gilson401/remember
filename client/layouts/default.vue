@@ -17,18 +17,12 @@
           </li>
         </ul>
       </div>
-      
-
-
 
       <p class="text-2xl py-2">Lista de tags</p>
-      <select
-        v-model="$store.state.display.sorting"
-        class="options text-2xl"
-      >
+      <select v-model="$store.state.display.sorting" class="options text-2xl">
         <option value="" disabled>Ordene</option>
-        <option value="alfabetical" >Ordenar por Alfabético</option>
-        <option value="memoryPoints" >Ordenar por Ponto de Memória</option>
+        <option value="alfabetical">Ordenar por Alfabético</option>
+        <option value="memoryPoints">Ordenar por Ponto de Memória</option>
       </select>
 
       <div class="h-full flex flex-col overflow-hidden overflow-y-auto my-4">
@@ -48,17 +42,15 @@
         </ul>
       </div>
       <div class="mb-4 text-2xl pt-4">
-
-       <span>&#9881;</span>   
-      <select
-        v-model="$store.state.display.showMetaData"
-        class="options text-2xl"
-      >
-        <option value="" disabled>Show Meta</option>
-        <option :value="true" >Exibir Metadata</option>
-        <option :value="false" >Ocultar Metadata</option>
-      </select>
-
+        <span>&#9881;</span>
+        <select
+          v-model="$store.state.display.showMetaData"
+          class="options text-2xl"
+        >
+          <option value="" selected disabled hidden>Meta</option>
+          <option :value="true">Exibir Metadata</option>
+          <option :value="false">Ocultar Metadata</option>
+        </select>
       </div>
     </aside>
     <div class="content">
@@ -77,11 +69,11 @@ export default {
   },
   computed: {
     tagsSortedByMemoryPoint() {
-
-    const data = {
+      const data = {
         memoryPoints: this.$store.getters['display/tagsSortedByMemoryPoint'],
-        alfabetical: this.$store.getters['display/tagsAndMemoryPointAlphabetical']
-    } 
+        alfabetical:
+          this.$store.getters['display/tagsAndMemoryPointAlphabetical']
+      }
       return data[this.$store.state.display.sorting]
     }
   },
@@ -95,9 +87,8 @@ export default {
 </script>
 
 <style lang="postcss" scoped>
-
 .options {
-    @apply hover:bg-gray-300 transition ease-in duration-300 py-2;
+  @apply hover:bg-gray-300 transition ease-in duration-300 py-2;
 }
 
 html,
@@ -126,5 +117,4 @@ aside {
 .content {
   grid-area: content;
 }
-
 </style>

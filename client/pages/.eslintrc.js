@@ -1,6 +1,6 @@
 module.exports = {
-    // root: true,
-    // rules: {
-    //   'vue/multi-word-component-names': 'off',
-    // },
-  }
+  // root: true,
+  // rules: {
+  //   'vue/multi-word-component-names': 'off',
+  // },
+}
