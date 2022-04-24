@@ -4,7 +4,7 @@
   "description": "memory api remember",
   "main": "server.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
+    "test": "jest",
     "server": "nodemon server.js"
   },
   "keywords": [

@@ -9,7 +9,8 @@ export default function ({ $axios }, inject) {
         timeout: 60000, // 1 minuto
         withCredentials: false,
         paramsSerializer: (params) =>
-            qs.stringify(params, { arrayFormat: 'brackets' }),
+            // qs.stringify(params, { arrayFormat: 'brackets' }),
+            qs.stringify(params, { arrayFormat: 'indices', allowSparse: true }),
         headers: {
             common: {
                 Accept: 'application/json',

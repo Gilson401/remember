@@ -89,5 +89,5 @@ sw.*
 # Vim swap files
 *.swp
 
-opcoes*.png
-opcoes*.PNG
+*.png
+*.PNG

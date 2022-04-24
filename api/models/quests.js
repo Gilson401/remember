@@ -1,5 +1,7 @@
+
 const mongoose = require('mongoose');
 const { Schema } = mongoose;
+const mongoosePaginate = require('mongoose-paginate-v2');
 
 const opts = {
     createdAt: 'created_at',
@@ -17,4 +19,11 @@ const QuestSchema = new Schema({
     lastDayVisited: String,
 }, opts);
 
-module.exports = mongoose.model('quest', QuestSchema);
+QuestSchema.plugin(mongoosePaginate);
+
+const model = mongoose.model('quest', QuestSchema);
+
+  
+model.paginate().then({});
+
+module.exports = model 

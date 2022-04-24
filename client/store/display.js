@@ -15,11 +15,26 @@ export const state = () => {
             totalAnswered: 0,
             rightAnswers: 0,
             wrongAnswers: 0
-        }
+        },
+        params: {
+            page: 1,
+            limit: 10,
+        },
+        page: 1,
+        stop: false,
+        paginationData: {}
     }
 }
 
 export const mutations = {
+
+    SET_PAGE_LIMIT(state, limit) {
+        state.params = {
+            ...state.params,
+            limit
+        }
+    },
+
     SET_SHOW_METADATA(state, value) {
         state.showMetaData = value
     },
@@ -40,8 +55,10 @@ export const mutations = {
     },
 
     DELETE_ITEM(state, id) {
-        const index = state.items.findIndex((i) => i.id === id)
-        if (index >= 0) state.items.splice(index, 1)
+        const index = state.items.findIndex((i) => i._id === id)
+        if (index >= 0) {
+            state.items.splice(index, 1)
+        }
     },
 
     ADD_ITEM(state, item) {
@@ -61,18 +78,53 @@ export const mutations = {
             ...state.currentTest,
             ...data
         }
-    }
+    },
+    SET_PARAMS(state, data) {
+        state.params = data
+    },
 
+    RESET_ITEMS(state) {
+        state.items = []
+    },
+
+    SET_PAGE(state, page) {
+        state.page = page
+    },
+
+    SET_STOP(state, stop) {
+        state.stop = stop
+    },
+    SET_PAGINATION_DATA(state, paginationData) {
+        state.paginationData = paginationData
+    },
 }
 
 export const actions = {
 
-    async index({ commit }) {
-
+    async index({ state, commit }) {
         const data = await this.$api.$get('remember')
-
         commit('SET_ITEMS', data)
+    },
 
+
+    async indexPaginate({ state, commit }) {
+
+        const data = await this.$api.$get('management', {
+            params: state.params,
+        })
+        commit('SET_ITEMS', data.docs)
+        const { totalDocs, limit, totalPages, page, pagingCounter,
+            hasPrevPage, hasNextPage, prevPage, nextPage } = data
+
+        commit('SET_PAGINATION_DATA', { totalDocs, limit, totalPages, page, pagingCounter, hasPrevPage, 
+            hasNextPage, prevPage, nextPage })
+
+    },
+
+    reset({ commit }) {
+        commit('RESET_ITEMS')
+        commit('SET_PAGE', 1)
+        commit('SET_STOP', false)
     },
 
     async create({ commit }, payload) {
@@ -118,7 +170,15 @@ export const getters = {
     getMetadataMode(state) {
         return state.showMetaData
     },
-
+    getItems(state) {
+        return state.items
+    },
+    getPaginationData(state) {
+        return state.paginationData
+    },
+    getParams(state) {
+        return state.params
+    },
     disponibleTags(state) {
         let tags = []
         state.items.forEach((item) => {
