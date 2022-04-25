@@ -12,7 +12,7 @@ router.get('/', async (req, res, next) => {
         });
 
     } catch (error) {
-        res.json({ error })
+        res.status(500).json({ error })
     }
 })
 

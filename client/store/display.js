@@ -34,6 +34,13 @@ export const mutations = {
     }
   },
 
+  SET_PAGE(state, page) {
+    state.params = {
+        ...state.params,
+        page
+      }
+  },
+
   SET_SHOW_METADATA(state, value) {
     state.showMetaData = value
   },
@@ -86,9 +93,7 @@ export const mutations = {
     state.items = []
   },
 
-  SET_PAGE(state, page) {
-    state.page = page
-  },
+
 
   SET_STOP(state, stop) {
     state.stop = stop

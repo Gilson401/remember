@@ -1,20 +1,21 @@
 <template>
-  <main class="mx-4">
-
-            <div class="mb-4 text-2xl pt-4 border-b border-gray-200 cursor-pointer">
-        <ul>
-          <li class="options">
-            <NuxtLink to="/form"
-              ><span class="mr-2">&#128221; </span>Formulário</NuxtLink
-            >
-          </li>
-          <li class="options">
-            <NuxtLink to="/"
-              ><span class="mr-2"> &#10067; </span>Questionário</NuxtLink
-            >
-          </li>
-        </ul>
-      </div>
+  <main class="mx-4 mb-10">
+    <div
+      class="flex mb-4 text-2xl pt-4 border-b border-gray-200 cursor-pointer"
+    >
+      <ul class="flex">
+        <li class="options">
+          <NuxtLink to="/form"
+            ><span class="mr-2">&#128221; </span>Formulário</NuxtLink
+          >
+        </li>
+        <li class="options">
+          <NuxtLink to="/"
+            ><span class="mr-2"> &#10067; </span>Questionário</NuxtLink
+          >
+        </li>
+      </ul>
+    </div>
 
     <h1 class="text-6xl">Gestão de questões</h1>
 
@@ -30,7 +31,9 @@
         Back
       </button>
 
-      <span class="mx-4"> {{ paginationData.page }} </span>
+      <span class="mx-4">
+        {{ paginationData.page }} / {{ paginationData.totalPages }}
+      </span>
 
       <button
         @click="goNext"
@@ -52,6 +55,8 @@
         <option value="10">10</option>
         <option value="20">20</option>
       </select>
+
+      <span class="mx-4"> Total docs {{ paginationData.totalDocs }} </span>
     </div>
 
     <table class="table-auto w-full">
@@ -135,6 +140,7 @@ export default {
   methods: {
     async setPageSize(e) {
       this.$store.commit('display/SET_PAGE_LIMIT', parseInt(e))
+      this.$store.commit('display/SET_PAGE', 1)
       await this.$store.dispatch('display/indexPaginate')
     },
     async goNext() {
