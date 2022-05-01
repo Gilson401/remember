@@ -1,4 +1,7 @@
+/** @format */
+
 import Vue from 'vue'
+
 export const state = () => {
   return {
     // mode: 'quest',
@@ -14,15 +17,15 @@ export const state = () => {
       questionsQtd: 0,
       totalAnswered: 0,
       rightAnswers: 0,
-      wrongAnswers: 0
+      wrongAnswers: 0,
     },
     params: {
       page: 1,
-      limit: 10
+      limit: 10,
     },
     page: 1,
     stop: false,
-    paginationData: {}
+    paginationData: {},
   }
 }
 
@@ -30,15 +33,15 @@ export const mutations = {
   SET_PAGE_LIMIT(state, limit) {
     state.params = {
       ...state.params,
-      limit
+      limit,
     }
   },
 
   SET_PAGE(state, page) {
     state.params = {
-        ...state.params,
-        page
-      }
+      ...state.params,
+      page,
+    }
   },
 
   SET_SHOW_METADATA(state, value) {
@@ -82,7 +85,7 @@ export const mutations = {
   SET_CURRENT_TEST(state, data) {
     state.currentTest = {
       ...state.currentTest,
-      ...data
+      ...data,
     }
   },
   SET_PARAMS(state, data) {
@@ -93,14 +96,12 @@ export const mutations = {
     state.items = []
   },
 
-
-
   SET_STOP(state, stop) {
     state.stop = stop
   },
   SET_PAGINATION_DATA(state, paginationData) {
     state.paginationData = paginationData
-  }
+  },
 }
 
 export const actions = {
@@ -111,7 +112,7 @@ export const actions = {
 
   async indexPaginate({ state, commit }) {
     const data = await this.$api.$get('management', {
-      params: state.params
+      params: state.params,
     })
     commit('SET_ITEMS', data.docs)
     const {
@@ -123,7 +124,7 @@ export const actions = {
       hasPrevPage,
       hasNextPage,
       prevPage,
-      nextPage
+      nextPage,
     } = data
 
     commit('SET_PAGINATION_DATA', {
@@ -135,7 +136,7 @@ export const actions = {
       hasPrevPage,
       hasNextPage,
       prevPage,
-      nextPage
+      nextPage,
     })
   },
 
@@ -154,7 +155,7 @@ export const actions = {
 
   async updateQuestMemoryPoint({ commit }, payload) {
     const updated = await this.$api.patch(`remember/${payload._id}`, {
-      ...payload
+      ...payload,
     })
 
     commit('ADD_ITEM', updated.data)
@@ -163,7 +164,7 @@ export const actions = {
   async update({ commit }, payload) {
     try {
       const updated = await this.$api.patch(`remember/${payload._id}`, {
-        ...payload
+        ...payload,
       })
 
       commit('ADD_ITEM', updated.data)
@@ -175,7 +176,7 @@ export const actions = {
   async deleteQuestItem({ commit }, id) {
     await this.$api.delete(`remember/${id}`)
     commit('DELETE_ITEM', id)
-  }
+  },
 }
 
 export const getters = {
@@ -274,5 +275,5 @@ export const getters = {
         }
         return 0
       })
-  }
+  },
 }

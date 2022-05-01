@@ -1,3 +1,5 @@
+<!-- @format -->
+
 <template>
   <main class="mx-4 mb-10">
     <div
@@ -23,10 +25,10 @@
       <button
         :disabled="!paginationData.prevPage"
         :class="{
-          'cursor-not-allowed bg-opacity-20': !paginationData.prevPage
+          'cursor-not-allowed bg-opacity-20': !paginationData.prevPage,
         }"
-        @click="goPrevious"
         class="bg-gray-600"
+        @click="goPrevious"
       >
         Back
       </button>
@@ -36,12 +38,12 @@
       </span>
 
       <button
-        @click="goNext"
         class="bg-gray-600"
         :disabled="!paginationData.nextPage"
         :class="{
-          'cursor-not-allowed bg-opacity-20': !paginationData.nextPage
+          'cursor-not-allowed bg-opacity-20': !paginationData.nextPage,
         }"
+        @click="goNext"
       >
         Next
       </button>
@@ -50,7 +52,10 @@
         class="outline-none ml-4 rounded-sm mb-1 px-4 py-1 border border-gray-500"
         @change="setPageSize($event.target.value)"
       >
-        <option value="" selected disabled hidden>Qtd por pagina</option>
+        <option value="" selected disabled hidden>
+          Qtd por pagina Qtd por pagina Qtd por pagina Qtd por pagina Qtd por
+          pagina Qtd por pagina Qtd por pagina Qtd por pagina
+        </option>
         <option value="5">5</option>
         <option value="10">10</option>
         <option value="20">20</option>
@@ -114,18 +119,18 @@ export default {
     store.dispatch('display/reset')
     store.commit('display/SET_PARAMS', {
       page: 1,
-      limit: 10
+      limit: 10,
     })
     await store.dispatch('display/indexPaginate')
   },
   data() {
     return {
-      params: {}
+      params: {},
     }
   },
   head() {
     return {
-      title: 'Admin'
+      title: 'Admin',
     }
   },
   computed: {
@@ -134,7 +139,7 @@ export default {
     },
     paginationData() {
       return this.$store.getters['display/getPaginationData']
-    }
+    },
   },
   mounted() {},
   methods: {
@@ -147,7 +152,7 @@ export default {
       if (this.paginationData.nextPage) {
         this.$store.commit('display/SET_PARAMS', {
           page: this.paginationData.page + 1,
-          limit: this.paginationData.limit
+          limit: this.paginationData.limit,
         })
       }
       await this.$store.dispatch('display/indexPaginate')
@@ -156,7 +161,7 @@ export default {
       if (this.paginationData.prevPage) {
         this.$store.commit('display/SET_PARAMS', {
           page: this.paginationData.page - 1,
-          limit: this.paginationData.limit
+          limit: this.paginationData.limit,
         })
       }
       await this.$store.dispatch('display/indexPaginate')
@@ -168,14 +173,14 @@ export default {
       } catch (error) {
         alert(`Não foi possível deletar  ${item._id}`)
       }
-    }
-  }
+    },
+  },
 }
 </script>
 
 <style lang="postcss" scoped>
 button {
-  @apply text-white font-bold uppercase text-xs  rounded shadow  
+  @apply text-white font-bold uppercase text-xs  rounded shadow 
     outline-none  mb-1 px-4 py-2 ease-linear transition-all duration-150;
 }
 

@@ -1,10 +1,8 @@
-
 # Remember Game
 
 Aplicação para fixar conteúdos estudados em qualquer área.
 O serviço cliente é um front end em vue2
 O serviço do back-end é em NodeJS, Express e MongoDB
-
 
 ## Instalação
 
@@ -28,8 +26,8 @@ Atualmente este está setado para um banco localhost padrão do mongo.
   GET /api/remember/${id}
 ```
 
-| Parâmetro   | Tipo       | Descrição                                   |
-| :---------- | :--------- | :------------------------------------------ |
+| Parâmetro | Tipo     | Descrição                                   |
+| :-------- | :------- | :------------------------------------------ |
 | `id`      | `string` | **Obrigatório**. O ID do item que você quer |
 
 #### Deleta um item
@@ -38,10 +36,9 @@ Atualmente este está setado para um banco localhost padrão do mongo.
   DELETE /api/remember/${id}
 ```
 
-| Parâmetro   | Tipo       | Descrição                                   |
-| :---------- | :--------- | :------------------------------------------ |
+| Parâmetro | Tipo     | Descrição                                   |
+| :-------- | :------- | :------------------------------------------ |
 | `id`      | `string` | **Obrigatório**. O ID do item que você quer |
-
 
 #### Atualiza um item
 
@@ -49,6 +46,6 @@ Atualmente este está setado para um banco localhost padrão do mongo.
   PATCH /api/remember/${id}
 ```
 
-| Parâmetro   | Tipo       | Descrição                                   |
-| :---------- | :--------- | :------------------------------------------ |
+| Parâmetro | Tipo     | Descrição                                   |
+| :-------- | :------- | :------------------------------------------ |
 | `id`      | `string` | **Obrigatório**. O ID do item que você quer |

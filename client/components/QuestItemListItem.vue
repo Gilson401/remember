@@ -1,3 +1,5 @@
+<!-- @format -->
+
 <template>
   <li
     class="border-transparent border-none"
@@ -12,14 +14,14 @@
 export default {
   data() {
     return {
-      isClicked: false
+      isClicked: false,
     }
   },
   methods: {
     toggleIsClicked() {
       this.isClicked = !this.isClicked
-    }
-  }
+    },
+  },
 }
 </script>
 

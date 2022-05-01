@@ -1,3 +1,5 @@
+<!-- @format -->
+
 <template>
   <!-- The Modal -->
   <div v-if="isOpen" id="myModal" class="modal">
@@ -39,15 +41,15 @@ export default {
   props: {
     image: {
       type: String,
-      required: true
+      required: true,
     },
     isOpen: {
-      type: Boolean
-    }
+      type: Boolean,
+    },
   },
   data() {
     return {
-      imageIndex: 0
+      imageIndex: 0,
     }
   },
 
@@ -56,7 +58,7 @@ export default {
       return `~/assets/${
         this.$store.state.display.modalImages[this.imageIndex]
       }`
-    }
+    },
   },
   methods: {
     closeModal() {
@@ -74,8 +76,8 @@ export default {
       if (this.imageIndex > this.$store.state.display.modalImages.length - 1) {
         this.imageIndex = 0
       }
-    }
-  }
+    },
+  },
 }
 </script>
 

@@ -1,3 +1,5 @@
+<!-- @format -->
+
 <template>
   <div class="p-2 my-4 rounded w-full shadow-sm" :class="answerState">
     <p v-if="$store.state.display.showMetaData" class="ml-11 mb-2 font-bold">
@@ -80,7 +82,7 @@
             class="btn-memory"
             :class="{
               'cursor-not-allowed': answerState !== 'undefined',
-              'cursor-pointer': answerState === 'undefined'
+              'cursor-pointer': answerState === 'undefined',
             }"
             type="button"
             :disabled="answerState !== 'undefined'"
@@ -92,7 +94,7 @@
             class="btn-memory"
             :class="{
               'cursor-not-allowed': answerState !== 'undefined',
-              'cursor-pointer': answerState === 'undefined'
+              'cursor-pointer': answerState === 'undefined',
             }"
             type="button"
             :disabled="answerState !== 'undefined'"
@@ -104,7 +106,7 @@
       </div>
     </div>
     <div
-      class="inline-block grid grid-cols-12 gap-2 place-content-center w-full"
+      class="grid grid-cols-12 gap-2 place-content-center w-full"
       :style="{ 'min-height': `${item.answer.length * 35 + 2}px` }"
     >
       <textarea
@@ -127,29 +129,29 @@ export default {
   props: {
     item: {
       type: Object,
-      required: true
+      required: true,
     },
     index: {
       type: Number,
-      default: 0
+      default: 0,
     },
     currentDay: {
       type: String,
-      default: ''
-    }
+      default: '',
+    },
   },
   data() {
     return {
       answerState: 'undefined',
       answerCount: '',
-      showResp: false
+      showResp: false,
     }
   },
   computed: {
     countLinesAnswer() {
       return this.answerCount.split(/\r?\n/).filter((item) => item.length > 0)
         .length
-    }
+    },
   },
 
   methods: {
@@ -168,7 +170,7 @@ export default {
         const payload = {
           _id: item._id,
           memory: value + item.memory,
-          lastDayVisited: this.currentDay
+          lastDayVisited: this.currentDay,
         }
         await this.$store.dispatch('display/updateQuestMemoryPoint', payload)
 
@@ -188,8 +190,8 @@ export default {
       } catch (error) {
         alert(`Não foi possível deletar  ${item._id}`)
       }
-    }
-  }
+    },
+  },
 }
 </script>
 

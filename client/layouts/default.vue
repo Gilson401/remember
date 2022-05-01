@@ -1,3 +1,5 @@
+<!-- @format -->
+
 <template>
   <div class="default_container">
     <aside
@@ -17,8 +19,8 @@
           </li>
           <li class="options">
             <NuxtLink to="/list"
-              ><span class="mr-2"> &#128203; Gestão </span>  </NuxtLink
-            >
+              ><span class="mr-2"> &#128203; Gestão </span>
+            </NuxtLink>
           </li>
         </ul>
       </div>
@@ -35,7 +37,7 @@
           <li
             v-for="(item, index) in tagsSortedByMemoryPoint"
             :key="index"
-            class="block justify-between flex text-2xl"
+            class="flex justify-between text-2xl"
           >
             <div>
               {{ item[0] }}
@@ -69,7 +71,7 @@ export default {
   name: 'DefaultLayout',
   data() {
     return {
-      mode: 'quest'
+      mode: 'quest',
     }
   },
   computed: {
@@ -77,17 +79,17 @@ export default {
       const data = {
         memoryPoints: this.$store.getters['display/tagsSortedByMemoryPoint'],
         alfabetical:
-          this.$store.getters['display/tagsAndMemoryPointAlphabetical']
+          this.$store.getters['display/tagsAndMemoryPointAlphabetical'],
       }
       return data[this.$store.state.display.sorting]
-    }
+    },
   },
   mounted() {},
   methods: {
     changeMode(mode) {
       this.$store.commit('display/SET_MODE', mode)
-    }
-  }
+    },
+  },
 }
 </script>
 

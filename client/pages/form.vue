@@ -1,3 +1,5 @@
+<!-- @format -->
+
 <template>
   <main class="pr-2 w-full h-full flex flex-col">
     <FormCreate />
@@ -10,9 +12,9 @@ export default {
   layout: 'default',
   head() {
     return {
-      title: 'Form'
+      title: 'Form',
     }
-  }
+  },
 }
 </script>
 <style lang="postcss" scoped></style>

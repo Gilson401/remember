@@ -1,3 +1,5 @@
+/** @format */
+
 import Vue from 'vue'
 
 Vue.directive('scroll', {
@@ -8,5 +10,5 @@ Vue.directive('scroll', {
       }
     }
     el.addEventListener('scroll', f)
-  }
+  },
 })

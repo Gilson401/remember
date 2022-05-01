@@ -1,3 +1,5 @@
+<!-- @format -->
+
 <template>
   <div class="bg-blue-100 w-full h-screen overflow-hidden overflow-y-auto">
     <form class="flex flex-col space-y-4 width-clamp rounded p-4">
@@ -88,7 +90,7 @@
         :class="{
           hidden: !lastCreatedStaus,
           'bg-red-200': lastCreatedStaus.includes('Não'),
-          'bg-green-200': lastCreatedStaus.includes('Criado')
+          'bg-green-200': lastCreatedStaus.includes('Criado'),
         }"
       >
         {{ lastCreatedStaus }}
@@ -111,7 +113,7 @@ export default {
       answer: '',
       editingItemId: '',
       questionItem: {},
-      lastDayVisited: ''
+      lastDayVisited: '',
     }
   },
   computed: {
@@ -123,11 +125,11 @@ export default {
         images: this.images.split(/\r?\n/).filter((i) => i),
         link: this.link.split(/\r?\n/).filter((i) => i),
         assunto: this.assunto.split(/\r?\n/).filter((i) => i),
-        answer: this.answer.split(/\r?\n/).filter((i) => i)
+        answer: this.answer.split(/\r?\n/).filter((i) => i),
       }
       if (this.editingItemId) payload._id = this.editingItemId
       return payload
-    }
+    },
   },
   methods: {
     submit() {
@@ -189,8 +191,8 @@ export default {
       this.link = currentItem.link.join('\r\n')
       this.assunto = currentItem.assunto.join('\r\n')
       this.answer = currentItem.answer.join('\r\n')
-    }
-  }
+    },
+  },
 }
 </script>
 <style lang="postcss" scoped>

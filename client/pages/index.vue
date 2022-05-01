@@ -1,3 +1,5 @@
+<!-- @format -->
+
 <template>
   <main class="pr-2 w-full h-full flex flex-col">
     <QuestsComp />
@@ -11,8 +13,8 @@ export default {
 
   head() {
     return {
-      title: 'Questionário'
+      title: 'Questionário',
     }
-  }
+  },
 }
 </script>

@@ -1,14 +1,14 @@
-
-const mongoose = require('mongoose');
+const mongoose = require("mongoose");
 const { Schema } = mongoose;
-const mongoosePaginate = require('mongoose-paginate-v2');
+const mongoosePaginate = require("mongoose-paginate-v2");
 
 const opts = {
-    createdAt: 'created_at',
-    updatedAt: 'updated_at'
+  createdAt: "created_at",
+  updatedAt: "updated_at",
 };
 
-const QuestSchema = new Schema({
+const QuestSchema = new Schema(
+  {
     assunto: [String],
     memory: Number,
     question: String,
@@ -17,13 +17,14 @@ const QuestSchema = new Schema({
     image: String,
     images: [String],
     lastDayVisited: String,
-}, opts);
+  },
+  opts
+);
 
 QuestSchema.plugin(mongoosePaginate);
 
-const model = mongoose.model('quest', QuestSchema);
+const model = mongoose.model("quest", QuestSchema);
 
-  
 model.paginate().then({});
 
-module.exports = model 
+module.exports = model;

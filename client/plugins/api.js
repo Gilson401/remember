@@ -1,3 +1,5 @@
+/** @format */
+
 import qs from 'qs'
 
 export default function ({ $axios }, inject) {
@@ -12,9 +14,9 @@ export default function ({ $axios }, inject) {
       qs.stringify(params, { arrayFormat: 'indices', allowSparse: true }),
     headers: {
       common: {
-        Accept: 'application/json'
-      }
-    }
+        Accept: 'application/json',
+      },
+    },
   })
 
   api.onError((err) => {
@@ -34,9 +36,9 @@ export default function ({ $axios }, inject) {
         )
     } else {
       // Something happened in setting up the request that triggered an Error
-      if (process.server) console.log(err.message)
-      if (process.client)
-        alert('Ocorreu um erro. Por favor, entre em contato com o suporte.')
+      // //   if (process.server) console.log(err.message)
+      // if (process.client)
+      //     alert('Ocorreu um erro. Por favor, entre em contato com o suporte.')
     }
   })
 

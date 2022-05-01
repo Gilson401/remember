@@ -1,3 +1,5 @@
+<!-- @format -->
+
 <template>
   <div class="quest-comp flex flex-col h-screen flex-grow-0 bg-white w-full">
     <ModalImage :is-open="$store.state.display.showModal" :image="modalImage" />
@@ -58,6 +60,7 @@
               Não Vista há {{ daysLong }} dias ou mais
             </button>
           </div>
+          <button type="buttons" class="form-btn" @click="reset">Reset</button>
         </div>
       </div>
     </div>
@@ -65,6 +68,22 @@
     <div
       class="quests-container h-full flex flex-col w-full overflow-hidden overflow-y-auto p-5"
     >
+      <div
+        v-if="false"
+        class="quests-container h-full flex flex-col w-full overflow-hidden overflow-y-auto p-5"
+      >
+        <div class="relative h-3 w-3 ml-4 flex items-center">
+          <span class="flex h-3 w-3">
+            <span
+              class="animate-ping absolute inline-flex h-full w-full rounded-full bg-purple-400 opacity-75"
+            ></span>
+            <span
+              class="relative inline-flex rounded-full h-3 w-3 bg-purple-500"
+            ></span>
+          </span>
+          Loading
+        </div>
+      </div>
       <QuestItem
         v-for="(item, index) in currentList"
         :key="index"
@@ -93,7 +112,7 @@ export default {
       daysLong: 10,
       currentArea: [],
       currentList: [],
-      filterTags: []
+      filterTags: [],
     }
   },
 
@@ -163,9 +182,9 @@ export default {
           .filter((item) => {
             return this.compareArrayItems(this.currentArea, item.assunto)
           })
-          .sort(this.sorter)
+          .sort(this.sorter),
       ]
-    }
+    },
   },
   mounted() {
     this.setRankMemoryByTag()
@@ -206,6 +225,10 @@ export default {
         item.assunto.includes('opcoes')
       )
     },
+    reset() {
+      this.currentList = []
+      this.currentArea = []
+    },
     setCurrentList() {
       if (this.currentArea.length === 0) {
         alert('Selecione pelo menos 1 item da lista de assuntos')
@@ -213,7 +236,7 @@ export default {
         this.currentList = [
           ...this.allListOrder.filter(
             (item) => !item.assunto.includes('opcoes')
-          )
+          ),
         ]
       } else {
         this.currentList = this.assuntoListed
@@ -272,15 +295,15 @@ export default {
     },
     compareArrayItems(arrUserSelected, arrQuestItemTag) {
       return arrUserSelected.some((item) => arrQuestItemTag.includes(item))
-    }
-  }
+    },
+  },
 }
 </script>
 
 <style lang="postcss" scoped>
 .form-btn {
-  @apply h-10 inline-block px-6 py-2.5 bg-blue-600 text-white font-medium text-xs leading-tight uppercase 
-  rounded shadow-md hover:bg-blue-700 hover:shadow-lg focus:bg-blue-700 focus:shadow-lg 
+  @apply h-10 inline-block px-6 py-2.5 bg-blue-600 text-white font-medium text-xs leading-tight uppercase rounded shadow-md hover:bg-blue-700    hover:shadow-lg focus:bg-blue-700 focus:shadow-lg 
+
   focus:outline-none focus:ring-0 transition duration-150 ease-in-out;
 }
 </style>
