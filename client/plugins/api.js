@@ -3,14 +3,14 @@
 import qs from 'qs'
 
 export default function ({ $axios }, inject) {
-  const baseURL = 'http://localhost:3010/'
+  const baseURL = 'http://192.168.0.107:3010/'
+  //   const baseURL = 'http://localhost:3010/'
 
   const api = $axios.create({
     baseURL,
     timeout: 60000, // 1 minuto
     withCredentials: false,
     paramsSerializer: (params) =>
-      // qs.stringify(params, { arrayFormat: 'brackets' }),
       qs.stringify(params, { arrayFormat: 'indices', allowSparse: true }),
     headers: {
       common: {
@@ -32,7 +32,9 @@ export default function ({ $axios }, inject) {
       // http.ClientRequest in node.js
       if (process.client)
         alert(
-          `Serviço temporariamente indisponível.\nTente novamente mais tarde.`
+          `Serviço temporariamente indisponível.\nTente novamente mais tarde. ${JSON.stringify(
+            err
+          )}`
         )
     } else {
       // Something happened in setting up the request that triggered an Error
