@@ -5,14 +5,25 @@
     <ModalImage :is-open="$store.state.display.showModal" :image="modalImage" />
     <div class="w-full py-2 space-y-3">
       <div class="px-2">
-        <div class="text-6xl block">Questionário</div>
-
-        <div class="h-auto flex flex-wrap items-center space-x-3">
+        <div class="flex">
+          <div class="text-4xl inline-block">Questionário</div>
+          <button
+            class="bg-red-200 rounded-sm px-2 ml-auto md:hidden inline-block"
+            type="button"
+            @click="isHiddenMenu = !isHiddenMenu"
+          >
+            {{ isHiddenMenu ? 'Ver Menu' : 'Ocultar Menu' }}
+          </button>
+        </div>
+        <div
+          class="h-auto gap-1 flex flex-col flex-wrap md:flex-row items-center bg-white absolute md:relative"
+          :class="[isHiddenMenu ? 'quest-menu-hidden' : 'quest-menu-show']"
+        >
           <label for="area">Assunto:</label>
           <select
             id="area"
             v-model="currentArea"
-            class="form-select appearance-none block w-64 px-3 py-1.5 text-base font-normal text-gray-700 bg-white bg-clip-padding bg-no-repeat border border-solid border-gray-300 rounded transition ease-in-out m-0 focus:text-gray-700 focus:bg-white focus:border-blue-600 focus:outline-none"
+            class="form-select mx-4 w-full appearance-none block md:w-64 px-3 py-1.5 my-1 text-base font-normal text-gray-700 bg-white bg-clip-padding bg-no-repeat border border-solid border-gray-300 rounded transition ease-in-out m-0 focus:text-gray-700 focus:bg-white focus:border-blue-600 focus:outline-none"
             name="area"
             multiple
           >
@@ -26,24 +37,32 @@
             </option>
           </select>
 
-          <button type="button" class="form-btn" @click="setCurrentList">
-            Montar
+          <button
+            type="button"
+            class="form-btn"
+            @click="setQuestions('setCurrentList')"
+          >
+            Montar Selecionados
           </button>
 
           <button
-            type="buttons"
+            type="button"
             class="form-btn"
-            @click="setCurrentListOnlyNegative"
+            @click="setQuestions('setCurrentListOnlyNegative')"
           >
             NEGATIVAS
           </button>
 
-          <button type="button" class="form-btn" @click="setOnlyOptions">
+          <button
+            type="button"
+            class="form-btn"
+            @click="setQuestions('setOnlyOptions')"
+          >
             Opções
           </button>
 
           <div
-            class="space-x-2 items-stretch flex mx-2 p-1 border border-gray-200 rounded text-center"
+            class="space-x-2 items-stretch flex my-1 p-1 border border-gray-200 rounded text-center w-full md:w-auto"
           >
             <input
               v-model="daysLong"
@@ -53,14 +72,14 @@
             />
 
             <button
-              type="buttons"
+              type="button"
               class="form-btn"
-              @click="setCurrentListLongDays"
+              @click="setQuestions('setCurrentListLongDays')"
             >
               Não Vista há {{ daysLong }} dias ou mais
             </button>
           </div>
-          <button type="buttons" class="form-btn" @click="reset">Reset</button>
+          <button type="button" class="form-btn" @click="reset">Reset</button>
         </div>
       </div>
     </div>
@@ -98,7 +117,9 @@
       <span v-if="currentList.length > 0">
         {{ currentList.length }} itens do teste atual
       </span>
-      <span v-else> Selecione ao menos um item da lista de assuntos </span>
+      <span v-else class="mx-4">
+        Selecione ao menos um item da lista de assuntos
+      </span>
     </div>
   </div>
 </template>
@@ -107,6 +128,7 @@
 export default {
   data() {
     return {
+      isHiddenMenu: false,
       showModal: false,
       modalImage: '',
       daysLong: 10,
@@ -242,6 +264,28 @@ export default {
         this.currentList = this.assuntoListed
       }
     },
+
+    setQuestions(type) {
+      if (type === 'setCurrentListLongDays') {
+        this.setCurrentListLongDays()
+      } else if (type === 'setOnlyOptions') {
+        this.setOnlyOptions()
+      } else if (type === 'setCurrentListOnlyNegative') {
+        this.setCurrentListOnlyNegative()
+      } else if (type === 'setCurrentList') {
+        this.setCurrentList()
+      }
+
+      this.manageMenu(true)
+    },
+
+    manageMenu(type) {
+      if (window.innerWidth > 767) {
+        this.isHiddenMenu = false
+        return
+      }
+      this.isHiddenMenu = type
+    },
     setCurrentListLongDays() {
       if (this.currentArea.length === 0) {
         alert('Selecione pelo menos 1 item da lista de assuntos')
@@ -302,8 +346,20 @@ export default {
 
 <style lang="postcss" scoped>
 .form-btn {
-  @apply h-10 inline-block px-6 py-2.5 bg-blue-600 text-white font-medium text-xs leading-tight uppercase rounded shadow-md hover:bg-blue-700    hover:shadow-lg focus:bg-blue-700 focus:shadow-lg 
+  @apply h-10 mb-1 block w-full md:w-auto md:inline-block px-6 py-2.5 bg-blue-600 text-white font-medium text-xs leading-tight
+   uppercase rounded shadow-md hover:bg-blue-700    mr-4
+    hover:shadow-lg focus:bg-blue-700 focus:shadow-lg 
 
   focus:outline-none focus:ring-0 transition duration-150 ease-in-out;
+}
+
+.quest-menu-hidden {
+  transform: translateX(-250%);
+  transition: all 500ms ease-in-out;
+}
+
+.quest-menu-show {
+  transform: translateX(0px);
+  transition: all 500ms ease-in-out;
 }
 </style>

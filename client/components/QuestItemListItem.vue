@@ -2,7 +2,7 @@
 
 <template>
   <li
-    class="border-transparent border-none"
+    class="border-transparent border-none w-full break-words"
     :class="{ highlighted: isClicked }"
     @click="toggleIsClicked"
   >

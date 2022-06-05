@@ -2,7 +2,10 @@
 
 <template>
   <div class="p-2 my-4 rounded w-full shadow-sm" :class="answerState">
-    <p v-if="$store.state.display.showMetaData" class="ml-11 mb-2 font-bold">
+    <p
+      v-if="$store.state.display.showMetaData"
+      class="mb-2 font-bold hidden md:block"
+    >
       Index: {{ index }}, Tags:
       <span
         v-for="(tag, tagIndex) in item.assunto"
@@ -20,7 +23,7 @@
     <div class="w-full">
       <p class="ml-2 mb-2 text-2xl w-full">
         <span
-          class="ml-11 mb-2 text-2xl cursor-pointer"
+          class="mb-2 text-2xl cursor-pointer"
           @click="showResp = !showResp"
         >
           &#128064;
@@ -29,8 +32,8 @@
         {{ item.question.replace('#x', item.answer.length) }}
       </p>
 
-      <div v-show="showResp">
-        <ul class="ml-11 mb-2 text-2xl">
+      <div v-show="showResp" class="w-full">
+        <ul class="mb-2 text-2xl">
           <QuestItemListItem
             v-for="(ritem, rindex) in item.answer"
             ref="answerRef"
@@ -42,14 +45,14 @@
 
         <div v-if="item.link && item.link.length > 0">
           <ul v-if="$store.state.display.showMetaData" class="my-2">
-            <li v-for="(link, i) in item.link" :key="i">
+            <li v-for="(link, i) in item.link" :key="i" class="w-full truncate">
               <a
                 v-if="link"
                 :href="link"
                 target="_blank"
-                class="inline-block ml-11 text-blue-400 font-bold"
+                class="overflow-ellipsis overflow-hidden inline-block text-blue-400 font-bold"
               >
-                &#127760; {{ link }}
+                &#127760; {{ link.substring(0, 17) }} ...
               </a>
             </li>
           </ul>
@@ -63,7 +66,7 @@
           @click="startModal(item)"
         />
 
-        <div v-else-if="item.images" class="flex ml-11 w-full overflow-x-auto">
+        <div v-else-if="item.images" class="flex w-full overflow-x-auto">
           <img
             v-for="(preview, i) in item.images"
             :key="i"
@@ -79,7 +82,7 @@
           class="flex w-full content-center h-10"
         >
           <button
-            class="btn-memory"
+            class="btn-memory bg-green-700"
             :class="{
               'cursor-not-allowed': answerState !== 'undefined',
               'cursor-pointer': answerState === 'undefined',
@@ -91,7 +94,7 @@
             Acertou
           </button>
           <button
-            class="btn-memory"
+            class="btn-memory bg-red-500"
             :class="{
               'cursor-not-allowed': answerState !== 'undefined',
               'cursor-pointer': answerState === 'undefined',
@@ -111,12 +114,12 @@
     >
       <textarea
         v-model="answerCount"
-        class="w-full rounded bg-gray-100 text-2xl col-span-10"
+        class="w-full rounded bg-gray-100 text-2xl col-span-12 md:col-span-10"
         :style="{ height: `${item.answer.length * 35}px` }"
       />
 
       <div
-        class="w-max h-max p-4 inline-block leading-10 text-center text-3xl my-auto text-blue-800 mx-2 bg-red-300 col-span-2 rounded-full"
+        class="w-max h-max p-4 md:inline-block leading-10 text-center text-3xl my-auto text-blue-800 mx-2 bg-red-300 col-span-2 rounded-full hidden"
       >
         {{ countLinesAnswer }}/{{ item.answer.length }}
       </div>
@@ -211,13 +214,13 @@ textarea {
   @apply px-2;
 }
 .btn-memory {
-  @apply ml-11 mb-2 bg-gray-500 text-white bg-gray-200 font-bold uppercase text-xs px-4 py-2 rounded shadow 
+  @apply text-white  font-bold uppercase text-xs px-4 py-2 rounded shadow 
   hover:shadow-md outline-none focus:outline-none mr-1 mb-1 ease-linear transition-all duration-150;
 }
 
 img {
   aspect-ratio: 2;
   width: 150px;
-  @apply ml-11 mb-2 cursor-pointer;
+  @apply mb-2 cursor-pointer;
 }
 </style>

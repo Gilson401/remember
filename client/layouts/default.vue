@@ -3,7 +3,7 @@
 <template>
   <div class="default_container">
     <aside
-      class="h-screen px-4 flex flex-col flex-grow-0 border border-gray-200"
+      class="h-screen px-4 flex-col flex-grow-0 border border-gray-200 hidden md:flex"
     >
       <div class="mb-4 text-2xl pt-4 border-b border-gray-200 cursor-pointer">
         <ul>
@@ -32,7 +32,9 @@
         <option value="memoryPoints">Ordenar por Ponto de Memória</option>
       </select>
 
-      <div class="h-full flex flex-col overflow-hidden overflow-y-auto my-4">
+      <div
+        class="h-full hidden md:flex flex-col overflow-hidden overflow-y-auto my-4"
+      >
         <ul>
           <li
             v-for="(item, index) in tagsSortedByMemoryPoint"
