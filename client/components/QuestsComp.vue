@@ -1,10 +1,12 @@
 <!-- @format -->
 
 <template>
-  <div class="quest-comp flex flex-col h-screen flex-grow-0 bg-white w-full">
+  <div
+    class="quest-comp px-2 flex flex-col h-screen flex-grow-0 bg-white w-full"
+  >
     <ModalImage :is-open="$store.state.display.showModal" :image="modalImage" />
     <div class="w-full py-2 space-y-3">
-      <div class="px-2">
+      <div class="relative">
         <div class="flex">
           <div class="text-4xl inline-block">Questionário</div>
           <button
@@ -23,7 +25,7 @@
           <select
             id="area"
             v-model="currentArea"
-            class="form-select mx-4 w-full appearance-none block md:w-64 px-3 py-1.5 my-1 text-base font-normal text-gray-700 bg-white bg-clip-padding bg-no-repeat border border-solid border-gray-300 rounded transition ease-in-out m-0 focus:text-gray-700 focus:bg-white focus:border-blue-600 focus:outline-none"
+            class="form-select w-full block md:w-64 px-3 py-1.5 my-1 text-base font-normal text-gray-700 bg-white border border-solid border-gray-300 rounded m-0 focus:text-gray-700 focus:bg-white focus:border-blue-600 focus:outline-none"
             name="area"
             multiple
           >
@@ -62,7 +64,7 @@
           </button>
 
           <div
-            class="space-x-2 items-stretch flex my-1 p-1 border border-gray-200 rounded text-center w-full md:w-auto"
+            class="bg-blue-300 space-x-2 items-stretch flex my-1 p-1 border border-gray-200 rounded text-center w-full md:w-auto"
           >
             <input
               v-model="daysLong"
@@ -85,7 +87,7 @@
     </div>
 
     <div
-      class="quests-container h-full flex flex-col w-full overflow-hidden overflow-y-auto p-5"
+      class="quests-container h-full flex flex-col w-full overflow-hidden overflow-y-auto"
     >
       <div
         v-if="false"
@@ -346,8 +348,8 @@ export default {
 
 <style lang="postcss" scoped>
 .form-btn {
-  @apply h-10 mb-1 block w-full md:w-auto md:inline-block px-6 py-2.5 bg-blue-600 text-white font-medium text-xs leading-tight
-   uppercase rounded shadow-md hover:bg-blue-700    mr-4
+  @apply h-10 block w-full md:w-auto md:inline-block px-6 py-2.5 bg-blue-600 text-white font-medium text-xs leading-tight
+   uppercase rounded shadow-md hover:bg-blue-700 
     hover:shadow-lg focus:bg-blue-700 focus:shadow-lg 
 
   focus:outline-none focus:ring-0 transition duration-150 ease-in-out;

@@ -52,10 +52,7 @@
         class="outline-none ml-4 rounded-sm mb-1 px-4 py-1 border border-gray-500"
         @change="setPageSize($event.target.value)"
       >
-        <option value="" selected disabled hidden>
-          Qtd por pagina Qtd por pagina Qtd por pagina Qtd por pagina Qtd por
-          pagina Qtd por pagina Qtd por pagina Qtd por pagina
-        </option>
+        <option value="" selected disabled hidden>Qtd por pagina</option>
         <option value="5">5</option>
         <option value="10">10</option>
         <option value="20">20</option>
@@ -70,6 +67,8 @@
           <th>Id</th>
           <th>Enunciado</th>
           <th>Respostas</th>
+          <th>Links</th>
+          <th>Img Files</th>
           <th>Última Vista</th>
           <th>Ação</th>
         </tr>
@@ -85,6 +84,12 @@
                 {{ itema }}
               </li>
             </ul>
+          </td>
+          <td>{{ item.link }}</td>
+          <td>
+            {{ item.image }}
+            <hr />
+            {{ item.images }}
           </td>
           <td>{{ item.lastDayVisited }}</td>
           <td>
